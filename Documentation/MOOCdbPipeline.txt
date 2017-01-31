@@ -1,0 +1,39 @@
+DEFINITIONS
+<SOURCE>	: Repertoire Github des projets
+<DATA>		: Repertoire des donnees
+<COURS> 	: Repertoire du cours
+
+
+STRUCTURE DES REPERTOIRES
+/<DATA>/<COURS>/LOGS 	: Logs du cours a traiter
+/<DATA>/<COURS>/DB 	: Fichiers csv de la DB intermediaire
+/<DATA>/<COURS>/MOOCDB 	: Fichiers csv de MOOCdb
+
+
+PROCEDURE
+Decompresser les logs vers /<DATA>/<COURS>/LOGS
+Concatener les logs dans un seul fichier (logs.txt) dans /<DATA>/<COURS>
+	cat /<DATA>/<COURS>/LOGS/* > /<DATA>/<COURS>/logs.txt
+Extraire les logs d'un cours et anonymiser les traces:
+	cd /<DATA>/<COURS>
+	cp /<SOURCE>/eTracesX/Scripts/ExtractCours.py .
+	Modifier la variable pCours dans ExtractCours.py
+	python ExtractCours.py -i logs.txt -o logs-anon.txt
+Produire la DB intermediaire
+	mkdir /<DATA>/<COURS>/DB
+	/<SOURCE>/Translation_software/edx_to_MOOCdb_piping/import.openedx.apipe/scripts/transformGivenLogfiles.sh /<DATA>/<COURS>/DB/ /<DATA>/<COURS>/logs-anon.txt
+Transformation DB (csv) vers MOOCdb (csv)
+	mkdir /<DATA>/<COURS>/MOOCDB
+	cd /<SOURCE>/Translation_software/edx_to_MOOCdb_piping/import.openedx.qpipe
+	Editer config.py
+		CSV_SOURCE_DIR = '/<DATA>/<COURS>/DB/'
+		CSV_PREFIX = 'logs-anon.txt.2016-01-08T11_57_21.351470_2481.sql'
+		DEST_DIR = '/<DATA>/<COURS>/MOOCDB/‘
+	python main.py
+Charger MOOCdb (csv) dans MySQL
+	cd /<DATA>/<COURS>/MOOCDB
+	cp /<SOURCE>/eTracesX/Scripts/create_MOOCdb.sql .
+	Editer create_MOOCdb.sql
+		CREATE DATABASE IF NOT EXISTS MOOCdb_<COURS>;
+		USE MOOCdb_<COURS>;
+	mysql -vv --show-warnings --local-infile=1 < create_MOOCdb.sql > mylog.txt &
