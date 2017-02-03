@@ -36,7 +36,7 @@ def executeSQL(connection,command,parent_conn = None):
     #remove comments and whitespace"
     commands = [x for x in commands if x.lstrip()[0:2] != '--']
     commands = [re.sub('\r','',x) for x in commands if x.lstrip() != '\r']
-    command = ' '.join(commands)
+    command = '\n'.join(commands)
 
     statements = sqlparse.split(command)
     count = 0

@@ -21,7 +21,7 @@ def curate(dbName = None, userName=None, passwd=None, dbHost=None, dbPort=None,
         startDate=None):
 
     if not dbName:
-        dbName = '3091x_2013_spring'
+        dbName = 'XXXXX'
     if not userName:
         userName = 'sebboyer'
     if not passwd:
@@ -31,32 +31,32 @@ def curate(dbName = None, userName=None, passwd=None, dbHost=None, dbPort=None,
     if not dbPort:
         dbPort = 3306
     if not startDate:
-        startDate='2013-04-09 00:00:00'
+        startDate='2015-03-16 00:00:00'
 
 
     # fileName, wordsToBeReplaced, wordsToReplace
     # preprocessing_files = [
     sql_files_to_run = [
 
-        # [
-        #  'initial_preprocessing.sql',
-        #  ['moocdb'],
-        #  [dbName]
-        # ],
-        # [
-        #  'add_submissions_validity_column.sql',
-        #  ['moocdb'],
-        #  [dbName]
-        # ],
-        # [
-        #  'problems_populate_problem_week.sql',
-        #  ['2013-09-24 13:14:07','moocdb'],
-        #  [startDate,dbName]
-        # ],
+         [
+          'initial_preprocessing.sql',
+          ['moocdb'],
+          [dbName]
+         ],
+         [
+          'add_submissions_validity_column.sql',
+          ['moocdb'],
+          [dbName]
+         ],
+         [
+          'problems_populate_problem_week.sql',
+          ['2013-09-24 13:14:07','moocdb'],
+          [startDate,dbName]
+         ],
         [
          'users_populate_user_last_submission_id.sql',
          ['INT(11)','moocdb'],
-         ['VARCHAR(50)',dbName]
+         ['CHAR(36)',dbName]
         ]
 
     ]
@@ -72,23 +72,23 @@ def curate(dbName = None, userName=None, passwd=None, dbHost=None, dbPort=None,
         #-durations were originally calculated wrong in observed_events
         #this fixes that
         #takes a long time (~3-4 hours per db)
-    # md.modify_durations(dbName, userName, passwd, dbHost, dbPort)
+    md.modify_durations(dbName, userName, passwd, dbHost, dbPort)
     print "done"
 
     print "Curating database:"
 
     print "curating submissions table"
-    # sub.curate_submissions(dbName, userName, passwd, dbHost, dbPort)
+    sub.curate_submissions(dbName, userName, passwd, dbHost, dbPort)
     print "done"
 
     print "Curating observed events table"
     #minimum duration for observed_events table:
     min_time = 10
-    # obv.curate_observed_events(dbName, userName, passwd, dbHost, dbPort, min_time)
+    obv.curate_observed_events(dbName, userName, passwd, dbHost, dbPort, min_time)
     print "done"
 
     print "Curating resource table"
-    # res.populate_resource_type(dbName, userName, passwd, dbHost, dbPort)
+#    res.populate_resource_type(dbName, userName, passwd, dbHost, dbPort)
     print "done"
 
 
@@ -132,11 +132,11 @@ def run_curation_all(userName=None, passwd = None, dbs = None, dbHost = None,
 if __name__ == "__main__":
     #run_curation_all()
     # curate(dbName = '201x_2013_spring')
-    curate(dbName             = 'moocdb',
+    curate(dbName             = 'MOOCdb_TEST_ULB',
          userName           = 'root',
-         # passwd
+         passwd             = '',
          dbHost             = 'localhost',
          # dbPort
          #This date is year-month-day
-         startDate         = '2013-09-24 13:14:07', # last date is 2014-03-11 05:09:03
+         startDate         = '2015-03-16 00:00:00', # last date is 2014-03-11 05:09:03
         )
