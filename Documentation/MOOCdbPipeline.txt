@@ -1,5 +1,5 @@
 DEFINITIONS
-<SOURCE>	: Repertoire Github des projets
+<SOURCE>	: Repertoire du projet eTracesX (Github)
 <DATA>		: Repertoire des donnees
 <COURS> 	: Repertoire du cours
 
@@ -16,7 +16,7 @@ Concatener les logs dans un seul fichier (logs.txt) dans /<DATA>/<COURS>
 	cat /<DATA>/<COURS>/LOGS/* > /<DATA>/<COURS>/logs.txt
 Extraire les logs d'un cours et anonymiser les traces:
 	cd /<DATA>/<COURS>
-	cp /<SOURCE>/eTracesX/Scripts/ExtractCours.py .
+	cp /<SOURCE>/Scripts/ExtractCours.py .
 	Modifier la variable pCours dans ExtractCours.py
 	python ExtractCours.py -i logs.txt -o logs-anon.txt
 Produire la DB intermediaire
@@ -32,7 +32,7 @@ Transformation DB (csv) vers MOOCdb (csv)
 	python main.py
 Charger MOOCdb (csv) dans MySQL
 	cd /<DATA>/<COURS>/MOOCDB
-	cp /<SOURCE>/eTracesX/Scripts/create_MOOCdb.sql .
+	cp /<SOURCE>/Scripts/create_MOOCdb.sql .
 	Editer create_MOOCdb.sql
 		CREATE DATABASE IF NOT EXISTS MOOCdb_<COURS>;
 		USE MOOCdb_<COURS>;

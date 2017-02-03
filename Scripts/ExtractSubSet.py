@@ -2,7 +2,6 @@
 
 import sys
 import getopt
-import re
 import datetime
 import json
 
