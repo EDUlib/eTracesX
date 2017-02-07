@@ -1,29 +1,11 @@
-import preprocess as pre
-import feature_extraction as fe
+import scripts_runner as sr
 import getpass
 import datetime
-from DigitalLearnerQuantified.feature_dict import returnAllFeatureSet
-
-def run_preprocess(dbName, userName, passwd, dbHost, dbPort, startDate, currentDate):
-    ## Preprocessing the MOOCdb database before feature extraction (only once)
-    print "Preprocessing database"
-    preprocessDirName = 'preprocessing_scripts'
-    pre.preprocess(dbName, userName, passwd, dbHost, dbPort, preprocessDirName, startDate, currentDate)
-    print "done"
-
-def run_feature_extraction(dbName, userName, passwd, dbHost,
-        dbPort,startDate,currentDate,numWeeks, features_to_skip, timeout):
-    ## Feature extraction
-    print "Extracting features"
-    featExtractDirName = 'feat_extract_scripts'
-
-    fe.extractAllFeatures(dbName, userName, passwd, dbHost, dbPort, startDate,
-            currentDate,numWeeks, featExtractDirName, features_to_skip, timeout)
-    print "done"
+#from DigitalLearnerQuantified.feature_dict import returnAllFeatureSet
 
 def main(dbName=None, userName=None, passwd=None, dbHost=None,
-        dbPort=None,startDate=None,currentDate=None,
-        features_to_skip=None, timeout = None, preprocess = False,numWeeks =None):
+        dbPort=None, startDate=None, currentDate=None,
+        scripts_to_run=None, timeout=None, numWeeks=None):
     if not dbHost:
         dbHost = '127.0.0.1'
     if not dbPort:
@@ -43,50 +25,100 @@ def main(dbName=None, userName=None, passwd=None, dbHost=None,
         print "currentDate: ",currentDate
     if not numWeeks:
         numWeeks = 15
-    if not features_to_skip:
+    if not scripts_to_run:
         ##3,4,5,14,103,104,105,201,301 depend on collaborations table- not populated yet
-        features_to_skip = list(returnAllFeatureSet() - set([1]))
+        scripts_to_run = [1]
         #[4,14,104,105,201,204,205,206,207,302]
-    if not timeout:
+#    if not timeout:
         ##set how long you're willing to wait for a feature (in seconds)
-        timeout = 1800
+#        timeout = 1800
 
-    if preprocess:
-        run_preprocess(dbName, userName, passwd, dbHost, dbPort, startDate, currentDate, numWeeks)
-
-    run_feature_extraction(dbName, userName, passwd, dbHost,
-            dbPort,startDate,currentDate,numWeeks,features_to_skip, timeout)
+    sr.runAllScripts(dbName, userName, passwd, dbHost, dbPort, startDate,
+            currentDate,numWeeks, scripts_to_run, timeout)
+    
 
 if __name__ == "__main__":
     '''
-    with collab:
-        These dates are month-day-year
-        3091x_2013_spring: start date: 2/5/2013 (19 weeks)
-        6002x_spring_2013: start date: 3/3/2013 (17 weeks)
-        6002x_fall_2012: start date: 9/5/2012 (15 weeks)
-        201x_2013_spring: start date: 4/15/2013 (15 weeks)
-        203x_2013_3t: start date: 10/28/2013 (7 weeks)
-        3091x_2012_fall: start date: 10/9/2012 (14 weeks)
-
-    without:
-        1473x_2013_spring: start date: 2/12/2013 (14 weeks)
+    ULB: 16 mars 2015 
+    
+    Scripts:
+        C1:    initial_preprocessing
+        C2:    add_submissions_validity_column
+        C3:    problems_populate_problem_week
+        C4:    users_populate_user_last_submission_id
+        C5:    modify_durations
+        C6:    curate_submissions
+        C7:    curate_observed_events
+        C8:    --- populate_resource_type
+        
+        P1:    create_longitudinal_features
+        P2:    --- populate_longitudinal_features
+        P3:    create_models_table
+        P4:    create_experiments_table
+        P5:    create_user_longitudinal_feature_values
+        P6:    users_populate_dropout_week
+        
+        1:     dropout
+        2:     sum_observed_events_duration
+        3:     * number_of_forum_posts
+        4:     * number_of_wiki_edits
+        5:     * average_length_of_forum_posts
+        6:     distinct_attempts
+        7:     number_of_attempts
+        8:     distinct_problems_correct
+        9:     average_number_of_attempts
+        10:    sum_observed_events_duration_per_correct_problem
+        11:    number_problem_attempted_per_correct_problem
+        12:    average_time_to_solve_problem
+        13:    observed_event_timestamp_variance
+        14:    * number_of_collaborations
+        15:    max_duration_resources
+        16:    sum_observed_events_lecture
+        17:    sum_observed_events_book
+        18:    sum_observed_events_wiki
+        103:   * difference_feature_3
+        104:   * difference_feature_4
+        105:   * difference_feature_5
+        109:   difference_feature_9
+        110:   difference_feature_10
+        111:   difference_feature_11
+        112:   difference_feature_12
+        201:   * number_of_forum_responses
+        202:   percentile_of_average_number_of_attempts
+        203:   percent_of_average_number_of_attempts
+        204:   pset_grade
+        205:   pset_grade_over_time
+        206:   lab_grade
+        207:   lab_grade_over_time
+        208:   attempts_correct
+        209:   percent_correct_submissions
+        210:   average_predeadline_submission_time
+        301:   * std_hours_working
+        302:   --- time_to_react
     '''
     main(dbName            = 'MOOCdb_TEST_ULB',
          userName           = 'root',
          passwd             = '',
-         timeout           = 1800,
-         preprocess        = True  ,  
+#         timeout           = 1800,
          #This date is year-month-day
          startDate         = '2015-03-16 00:00:00',
-         # ULB: 16 mars 2015 
          numWeeks          = 15,
+#        Curation of MOOCdb
+         scripts_to_run = ['C1','C2','C3','C4','C5','C6','C7']
+#        Preprocess for features extraction
+#         scripts_to_run = ['P1','P3','P4','P5','P6']
+#        Feature extraction without collab
+#         scripts_to_run = [1,2,6,7,8,9,10,11,12,13,15,16,17,18,109,110,111,112,202,203,204,205,206,207,208,209,210]
+#        Feature extraction collab
+#         scripts_to_run = [3,4,5,14,103,104,105,201,301]
+
+#        List of all scripts ... see description above and in the dictionary
+#         scripts_to_run = ['C1','C2','C3','C4','C5','C6','C7','C8']
+#         scripts_to_run = ['P1','P2','P3','P4','P5','P6']
+#         scripts_to_run = [1,2,6,7,8,9,10,11,12,13,15,16,17,18,109,110,111,112,202,203,204,205,206,207,208,209,210,302]
+#         scripts_to_run = [3,4,5,14,103,104,105,201,301]
+          
 #         features_to_skip =  list(returnAllFeatureSet() - set([13]))
-         features_to_skip =  list(returnAllFeatureSet() - set([1,2,6,7,8,9]))
-#         features_to_skip =  list(returnAllFeatureSet() - set([10,11,12,13,15,16,17,18]))
-#         features_to_skip =  list(returnAllFeatureSet() - set([109,110,111,112]))
-#         features_to_skip =  list(returnAllFeatureSet() - set([202,203,204,205,206,207,208,209,210]))
-#         features_to_skip =  list(returnAllFeatureSet() - set([302]))
- 
          #orginally we skipped 17, but i'm not sure why. The book resource seems to be populated
          #features_to_skip  = [4,14,104,105,201,204,205,206,207,302] # with collaborations
          #features_to_skip =  [3,4,5,14,17,103,104,105,201,204,205,206,207,301,302] # without collaborations

@@ -1,15 +1,16 @@
 import time
 from sql_functions import *
 #list of features:
-from feature_dict import *
+from scripts_dict import *
 
-def extractFeature(dbName, userName, passwd, host, port, startDate, currentDate, numWeeks, dirName,
+def extractFeature(dbName, userName, passwd, host, port, startDate, currentDate, numWeeks,
                     featureID, timeout):
     begin = time.time()
-    if featureID not in featureDict:
+    if featureID not in scriptsDict:
         print "unsupported feature"
         return False
-    feature = featureDict[featureID]
+    feature = scriptsDict[featureID]
+    dirName = feature['dirname']
     isSQL = (feature['extension'] == '.sql')
     print "extracting feature %s: %s" % (featureID, feature["name"])
     if isSQL:
@@ -39,14 +40,12 @@ def extractFeature(dbName, userName, passwd, host, port, startDate, currentDate,
     else:
         return True
 
-
-def extractAllFeatures(dbName, userName, passwd, host, port, startDate,
-                        currentDate,numWeeks, dirName, featuresToSkip, timeout):
-
+def runAllScripts(dbName, userName, passwd, host, port, startDate,
+                        currentDate,numWeeks, scripts_to_run, timeout):
     pass
-    for feature in featuresFromFeaturesToSkip(featuresToSkip):
+    for script in scripts_to_run:
         success = extractFeature(dbName, userName, passwd, host, port, startDate,
-                                currentDate, numWeeks, dirName, feature, timeout)
+                                currentDate, numWeeks, script, timeout)
         if not success:
             cont = ""
             while not (cont == "y" or cont == "n"):

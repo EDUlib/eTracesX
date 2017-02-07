@@ -35,7 +35,7 @@ def executeSQL(connection,command,parent_conn = None):
     #remove comments and whitespace"
     commands = [x for x in commands if x.lstrip()[0:2] != '--']
     commands = [re.sub('\r','',x) for x in commands if x.lstrip() != '\r']
-    command = ' '.join(commands)
+    command = '\n'.join(commands)
 
     statements = sqlparse.split(command)
     count = 0
@@ -43,6 +43,7 @@ def executeSQL(connection,command,parent_conn = None):
         cur = connection.cursor()
         #make sure actually does something
         if sqlparse.parse(statement):
+            print "executing SQL statement"
             cur.execute(statement)
         cur.close()
     connection.commit()
@@ -76,7 +77,12 @@ def block_sql_command(conn, cursor, command, data, block_size):
             block = data[current_offset:]
             last_block = True
         if block:
-            cursor.executemany(command, block)
+            if command.startswith('INSERT'):
+                cursor.executemany(command, block)
+            else:
+                data_str = str(block)[1:-1]
+                grounded_command = command % (data_str)
+                cursor.execute(grounded_command)
             conn.commit()
             current_offset += block_size
 
@@ -139,7 +145,7 @@ def runSQLFile(conn, fileName, dbName, toBeReplaced, toReplace, timeout):
         return False
 
 def runPythonFile(conn, conn2, module, fileName, dbName, startDate,
-        currentDate, numWeeks, timeout = 100000):
+        currentDate, numWeeks, timeout = None):
     try:
         imported = getattr(__import__(module, fromlist=[fileName]), fileName)
     except:
