@@ -31,7 +31,7 @@ BEGIN
 
     IF _count = 0 THEN
         ALTER TABLE `moocdb`.`users`
-            ADD COLUMN `user_last_submission_id` INT(11) NULL;
+            ADD COLUMN `user_last_submission_id` CHAR(36) NULL;
     END IF;
 
     UPDATE `moocdb`.`users` AS `users`

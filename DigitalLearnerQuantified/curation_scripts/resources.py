@@ -61,9 +61,7 @@ def compute_resource_type_id(res_types,url):
 
 # Populate the resource_type_id for the resources having resource_type_id=0
 # when uri matches one of the resource_type_names in the resource_types table
-def populate_resource_type(dbName, userName, passwd, host, port):
-
-    conn = openSQLConnectionP(dbName, userName, passwd, host, port)
+def main(conn, conn2, dbName, startDate, currentDate, numWeeks, parent_conn = None):
     # Extract resources types of the database
     res_types=extract_resource_types(conn)
 
@@ -90,11 +88,12 @@ def populate_resource_type(dbName, userName, passwd, host, port):
         conn.commit()
         cur.execute(command)
         count+=1
-    closeSQLConnection(conn)
 
     print "%s rows have been updated" %(count)
 
-    return 0
+    if parent_conn:
+        parent_conn.send(True)
+    return True
 
 
 

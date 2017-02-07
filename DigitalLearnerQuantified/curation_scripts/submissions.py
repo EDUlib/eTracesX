@@ -4,18 +4,11 @@ Created: 5/24/2015 by Ben Schreck
 Curates submissions (and indirectly assessments)
 """
 
-import MySQLdb
-import time
-import csv
-import os
-import glob
 from sql_functions import *
-import getpass
 
 BLOCK_SIZE = 50
 
-def curate_submissions(dbName, userName, passwd, host, port):
-    conn = openSQLConnectionP(dbName, userName, passwd, host, port)
+def main(conn, conn2, dbName, startDate, currentDate, numWeeks, parent_conn = None):
     cursor = conn.cursor()
 
     invalidate_submissions_first_pass = '''
@@ -132,4 +125,7 @@ def curate_submissions(dbName, userName, passwd, host, port):
     block_sql_command(conn, cursor, modify_valids, valid_submission_ids,BLOCK_SIZE)
 
     cursor.close()
-    conn.close()
+    
+    if parent_conn:
+        parent_conn.send(True)
+    return True

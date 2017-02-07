@@ -21,4 +21,4 @@ CALL `moocdb`.AlterTable();
 
 UPDATE `moocdb`.`problems` AS a
   INNER JOIN `moocdb`.`problems` AS b ON b.problem_id = a.problem_id
-  SET a.problem_week = FLOOR((UNIX_TIMESTAMP(b.problem_hard_deadline) - UNIX_TIMESTAMP('2012-03-05 12:00:00')) / (3600 * 24 * 7)) + 1;
+  SET a.problem_week = FLOOR((UNIX_TIMESTAMP(b.problem_hard_deadline) - UNIX_TIMESTAMP('START_DATE_PLACEHOLDER')) / (3600 * 24 * 7)) + 1;

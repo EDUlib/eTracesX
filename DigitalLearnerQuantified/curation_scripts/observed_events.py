@@ -4,17 +4,12 @@ Created: 5/24/2015 by Ben Schreck
 Curates observed events
 """
 
-import MySQLdb
-import time
-import csv
-import os
-import glob
 from sql_functions import *
-import getpass
+
 BLOCK_SIZE = 50
 
-def curate_observed_events(dbName, userName, passwd, host, port, min_time = 10):
-    conn = openSQLConnectionP(dbName, userName, passwd, host, port)
+def main(conn, conn2, dbName, startDate, currentDate, numWeeks, parent_conn = None):
+    min_time = 10
     #cursor = conn.cursor()
     ## invalidate events with duration less than min_time
     #invalidate_durations = '''
@@ -71,9 +66,11 @@ def curate_observed_events(dbName, userName, passwd, host, port, min_time = 10):
         '''
         block_sql_command(conn, cursor, modify_invalids, invalid_event_ids, BLOCK_SIZE)
 
-        cursor.close()
-
-    conn.close()
+    cursor.close()
+    
+    if parent_conn:
+        parent_conn.send(True)
+    return True
 
 def events_equal(row1, row2):
     # 0 = user_id

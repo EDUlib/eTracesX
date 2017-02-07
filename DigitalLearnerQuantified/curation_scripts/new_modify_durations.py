@@ -8,9 +8,8 @@ MAX_DURATION_SECONDS = 3600
 DEFAULT_DURATION_SECONDS = 100      # duration if next event is > MAX_DURATION_SECONDS away
 BLOCK_SIZE = 50000
 
-def modify_durations(dbName, userName, passwd, host, port):
-    connection = openSQLConnectionP(dbName, userName, passwd, host, port)
-    cursor = connection.cursor()
+def main(conn, conn2, dbName, startDate, currentDate, numWeeks, parent_conn = None):
+    cursor = conn.cursor()
 
     cursor.execute('SELECT DISTINCT(user_id) FROM observed_events')
     user_ids = cursor.fetchall()
@@ -39,7 +38,7 @@ def modify_durations(dbName, userName, passwd, host, port):
                             SET observed_event_duration = '%s'
                             WHERE observed_event_id = '%s'
                             ''' % (duration, row[0]))
-                connection.commit()
+                conn.commit()
             last_timestamp = rows[-1][1]
         count += 1
         if count == 50:
@@ -47,7 +46,10 @@ def modify_durations(dbName, userName, passwd, host, port):
             begin = time.time()
             count = 0
     cursor.close()
-    connection.close()
+    
+    if parent_conn:
+        parent_conn.send(True)
+    return True
 
 def calc_duration(timestamp1, timestamp2):
     duration = int((timestamp2 - timestamp1).total_seconds())

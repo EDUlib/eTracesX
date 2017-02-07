@@ -1,6 +1,6 @@
-from feature_dict import *
+from scripts_dict import *
 
-def main(conn, conn2, dbName,startDate,currentDate):
+def main(conn, conn2, dbName, startDate, currentDate, numWeeks, parent_conn = None):
     cursor = conn.cursor()
     check_exists = '''
     SELECT count(*)
@@ -28,4 +28,8 @@ def main(conn, conn2, dbName,startDate,currentDate):
             values = "".join(values)
             cursor.execute(values)
             conn.commit()
-            cursor.close()
+    cursor.close()
+    
+    if parent_conn:
+        parent_conn.send(True)
+    return True

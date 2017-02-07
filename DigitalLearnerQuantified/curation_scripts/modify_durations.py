@@ -9,10 +9,8 @@ DATABASES = ["201x_2013_spring",'1473x_2013_spring','203x_2013_3t','3091x_2012_f
 MAX_DURATION_SECONDS = 3600
 DEFAULT_DURATION_SECONDS = 100      # duration if next event is > MAX_DURATION_SECONDS away
 
-def modify_durations(dbName, userName, passwd, host, port):
-    print "running databse", dbName
-    connection = openSQLConnectionP(dbName, userName, passwd, host, port)
-    cursor = connection.cursor()
+def main(conn, conn2, dbName, startDate, currentDate, numWeeks, parent_conn = None):
+    cursor = conn.cursor()
 
 
     count = 0
@@ -29,7 +27,7 @@ def modify_durations(dbName, userName, passwd, host, port):
             cursor.execute(" UPDATE observed_events"+
                            " SET observed_event_duration = " + str(calc_duration) +
                            " WHERE observed_event_id = " + fix_id_string(str(event_id))) # Alec edit 12/28/2016
-            connection.commit()
+            conn.commit()
         count += 1
         if count == 50:
             print "elapsed time for 50 users: ", time.time() - begin
@@ -38,7 +36,10 @@ def modify_durations(dbName, userName, passwd, host, port):
 
     print "finished"
     cursor.close()
-    connection.close()
+
+    if parent_conn:
+        parent_conn.send(True)
+    return True
 
 
 def get_user_id_set(cursor, table):
