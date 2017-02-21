@@ -4,6 +4,7 @@ import sys
 import os 
 import extractor
 import config as cfg
+import getopt
 
 from events import *
 from resources import *
@@ -86,5 +87,27 @@ def main():
 
 
 if __name__ == "__main__":
+    try:
+        opts, args = getopt.getopt(sys.argv[1:],"hi:o:",["ifile=","ofile="])
+    except getopt.GetoptError:
+        print 'main.py -i <inputfile> -o <outputdir>'
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print 'main.py -i <inputfile> -o <outputdir>'
+            sys.exit()
+        elif opt in ("-i", "--ifile"):
+            cfg.EDX_TRACK_EVENT_LOG = arg
+        elif opt in ("-o", "--ofile"):
+            cfg.DEST_DIR = arg
+            cfg.RESOURCE_HIERARCHY = cfg.DEST_DIR + 'resource_hierarchy.org'
+            cfg.PROBLEM_HIERARCHY = cfg.DEST_DIR + 'problem_hierarchy.org' 
+            cfg.LOG_FILE = cfg.DEST_DIR + 'log.org'
+
+#    print 'Input file is :', cfg.EDX_TRACK_EVENT_LOG
+#    print 'Output file is :', cfg.DEST_DIR
+    if cfg.EDX_TRACK_EVENT_LOG == '' or cfg.DEST_DIR == '':
+        sys.exit()
+        
     main()
 

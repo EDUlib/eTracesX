@@ -22,10 +22,7 @@ Extraire les logs d'un cours et anonymiser les traces:
 Transformation des logs vers MOOCdb (csv)
 	mkdir /<DATA>/<COURS>/MOOCDB
 	cd /<SOURCE>/Translation_software/edx_to_MOOCdb
-	Editer config.py
-		EDX_TRACK_EVENT_LOG = '/<DATA>/<COURS>/logs-anon.txt'
-		DEST_DIR = '/<DATA>/<COURS>/MOOCDB/‘
-	python main.py
+	python main.py -i /<DATA>/<COURS>/logs-anon.txt -o /<DATA>/<COURS>/MOOCDB/ &
 Charger MOOCdb (csv) dans MySQL
 	cd /<DATA>/<COURS>/MOOCDB
 	cp /<SOURCE>/Scripts/create_MOOCdb.sql .

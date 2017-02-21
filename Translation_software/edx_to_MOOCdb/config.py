@@ -2,9 +2,9 @@
 import re
 
 ## Input file
-EDX_TRACK_EVENT_LOG = '/Users/leducni/Documents/DATA/TEST-BUGGY/logs-test-ITES.txt'
+EDX_TRACK_EVENT_LOG = '/Users/leducni/Documents/DATA/COURS/logs-anon.txt'
 ## Output files
-DEST_DIR = '/Users/leducni/Documents/DATA/TEST-BUGGY/MOOCDB/'
+DEST_DIR = '/Users/leducni/Documents/DATA/COURS/MOOCDB/'
 
 ## Input source
 ## Can be either 'csv', 'sql' or 'json'

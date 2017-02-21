@@ -10,11 +10,11 @@ import edxTrackLogJSONParser
 def get_events():
     src = cfg.INPUT_SOURCE
     if src=='csv':
-        return CSVExtractor()
+        return CSVExtractor(cfg.EDX_TRACK_EVENT)
     elif src=='mysql':
         return MySQLExtractor()
     elif src=='json':
-        return JSONExtractor()
+        return JSONExtractor(cfg.EDX_TRACK_EVENT_LOG)
 
 class CSVExtractor(object):
     """ 
@@ -26,7 +26,7 @@ class CSVExtractor(object):
     CORRECT_MAP_FIELDNAMES = ['correct_map_id','answer_identifier', 'correctness','npoints','msg','hint','hintmode','queustate']
     EDX_TRACK_EVENT_FIELDNAMES = ['_id','event_id','agent','event_source','event_type','ip','page','session','time','anon_screen_name','downtime_for','student_id','instructor_id','course_id','course_display_name','resource_display_name','organization','sequence_id','goto_from','goto_dest','problem_id','problem_choice','question_location','submission_id','attempts','long_answer','student_file','can_upload_file','feedback','feedback_response_selected','transcript_id','transcript_code','rubric_selection','rubric_category','video_id','video_code','video_current_time','video_speed','video_old_time','video_new_time','video_seek_type','video_new_speed','video_old_speed','book_interaction_type','success','answer_id','hint','hintmode','msg','npoints','queuestate','orig_score','new_score','orig_total','new_total','event_name','group_user','group_action','position','badly_formatted','correctMap_fk','answer_fk','state_fk','load_info_fk']
 
-    def __init__(self, edx_track_event=cfg.EDX_TRACK_EVENT, answer=cfg.ANSWER, correct_map=cfg.CORRECT_MAP):
+    def __init__(self, edx_track_event, answer=cfg.ANSWER, correct_map=cfg.CORRECT_MAP):
         # Create a CSV reader for the EdxTrackEvent table
         try:
             events = open(edx_track_event)
@@ -102,13 +102,13 @@ class CSVExtractor(object):
 
 class JSONExtractor(object):
     
-    def __init__(self, edx_track_event_log=cfg.EDX_TRACK_EVENT_LOG):
+    def __init__(self, edx_track_event_log):
         try:
             self.logsToProcess = []
             self.jsonParserInstance = edxTrackLogJSONParser.EdXTrackLogJSONParser()
             self.events_log = open(edx_track_event_log)
         except IOError as e:
-            print 'Unable to open EdxTrackEvent log file : %s'% cfg.EDX_TRACK_EVENT_LOG
+            print 'Unable to open EdxTrackEvent log file : %s'% edx_track_event_log
             exit
     
     def __iter__(self):
