@@ -40,8 +40,8 @@ class CSVExtractor(object):
         # Load Answer and CorrectMap tables into pandas DataFrames,
         # indexed by the table's primary key.
         try:
-            self.answer = pd.read_csv(answer, delimiter=',', quotechar=cfg.QUOTECHAR, index_col=0, names=self.ANSWER_FIELDNAMES, dtype='string')
-            self.correct_map = pd.read_csv(correct_map, delimiter=',', quotechar=cfg.QUOTECHAR, index_col=0, names=self.CORRECT_MAP_FIELDNAMES,dtype='string')
+            self.answer = pd.read_csv(answer, delimiter=',', quotechar=cfg.QUOTECHAR, escapechar='\\', na_filter=False, index_col=0, names=self.ANSWER_FIELDNAMES, dtype='string')
+            self.correct_map = pd.read_csv(correct_map, delimiter=',', quotechar=cfg.QUOTECHAR, escapechar='\\', na_filter=False, index_col=0, names=self.CORRECT_MAP_FIELDNAMES,dtype='string')
         except Exception as e:
             print 'Pandas unable to load CSV :'
             print str(e)

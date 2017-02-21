@@ -946,7 +946,7 @@ class EdXTrackLogJSONParser(GenericJSONParser):
             
             # Event type values that start with slash:
             elif eventType[0] == '/':
-                self.handlePathStyledEventTypes(record, row, event)
+                row = self.handlePathStyledEventTypes(record, row, event)
                 return
             
             else:
@@ -3613,6 +3613,8 @@ class EdXTrackLogJSONParser(GenericJSONParser):
             return self.subHandleProblemCheckInPath(row, postDict)
         elif verb == 'save_grade':
             return self.subHandleSaveGrade(row, postDict)
+        else:
+            return row
         
     def handleForumEvent(self, record, row, event):
 
