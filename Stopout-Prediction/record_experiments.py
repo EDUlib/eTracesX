@@ -52,7 +52,7 @@ def record_model(db_name, username, passwd, host, port, features, model, exp_id)
     num_features= len(features)-1
     for i,value in enumerate(model[1:]):
         feature_idx = (i % num_features)+1
-        if feature_idx == 0 and i != 0:
+        if feature_idx == 1 and i != 0:
             week += 1
         data.append((features[feature_idx], week, value[0], exp_id))
 

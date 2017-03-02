@@ -114,7 +114,16 @@ def runAllProblemsPerCourse(course_db_name, features_to_skip):
 if __name__ == "__main__":
     runAllProblemsPerCourse('MOOCdb_TEST_ULB',
                 features_to_skip = list(feature_dict.returnAllFeatureSet() - set([1,2,6,7,8,9])))                                             
-#                features_to_skip = [3,4,5,14,103,104,105,201,204,205,206,207,301]) #without collab
-                #features_to_skip = [4, 14, 104,105, 17,201,204,205,206,207,302]) #with collab
+#                features_to_skip = [3,4,5,14,103,104,105,201,204,205,206,207,301]) #MIT without collab
+                #features_to_skip = [  4,  14,    104,105,201,204,205,206,207,   302,17]) #MIT with collab
+
+# Features:
+#    Obligatoire: 1
+#    Without Collab
+#        OK: 2, 6, 7, 8, 9, 10, 11, 12, 13, 15, 109, 110, 111, 112, 202, 203, 208, 209
+#        KO: 16, 17, 18, 210, 302
+#    With Collab
+#        OK: 3, 5(L), 14, 103, 105(L), 201, 301
+#        KO: 4, 104, 204, 205, 206, 207
 
     #run everything except 3091 2013 spring

@@ -27,7 +27,7 @@ SELECT
 	302,
 	a.user_id,
 	FLOOR((UNIX_TIMESTAMP(a.observed_event_timestamp) - UNIX_TIMESTAMP(@start_date)) / (3600 * 24 * 7)) AS week,
-	AVG((UNIX_TIMESTAMP(a.observed_event_timestamp) - UNIX_TIMESTAMP(b.resource_release_timestamp))) AS avg_reacting_time,
+	AVG((UNIX_TIMESTAMP(a.observed_event_timestamp) - UNIX_TIMESTAMP(b.resource_release_date))) AS avg_reacting_time,
     @current_date
 FROM
 		`moocdb`.observed_events AS a

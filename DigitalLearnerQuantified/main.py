@@ -62,8 +62,8 @@ if __name__ == "__main__":
         1:     dropout
         2:     sum_observed_events_duration
         3:     * number_of_forum_posts
-        4:     * number_of_wiki_edits
-        5:     * average_length_of_forum_posts
+        4:     --- * number_of_wiki_edits
+        5:     -L- * average_length_of_forum_posts
         6:     distinct_attempts
         7:     number_of_attempts
         8:     distinct_problems_correct
@@ -74,12 +74,12 @@ if __name__ == "__main__":
         13:    observed_event_timestamp_variance
         14:    * number_of_collaborations
         15:    max_duration_resources
-        16:    sum_observed_events_lecture
-        17:    sum_observed_events_book
-        18:    sum_observed_events_wiki
+        16:    --- sum_observed_events_lecture
+        17:    --- sum_observed_events_book
+        18:    --- sum_observed_events_wiki
         103:   * difference_feature_3
-        104:   * difference_feature_4
-        105:   * difference_feature_5
+        104:   --- * difference_feature_4
+        105:   -L- * difference_feature_5
         109:   difference_feature_9
         110:   difference_feature_10
         111:   difference_feature_11
@@ -87,13 +87,13 @@ if __name__ == "__main__":
         201:   * number_of_forum_responses
         202:   percentile_of_average_number_of_attempts
         203:   percent_of_average_number_of_attempts
-        204:   pset_grade
-        205:   pset_grade_over_time
-        206:   lab_grade
-        207:   lab_grade_over_time
+        204:   --- pset_grade
+        205:   --- pset_grade_over_time
+        206:   --- lab_grade
+        207:   --- lab_grade_over_time
         208:   attempts_correct
         209:   percent_correct_submissions
-        210:   average_predeadline_submission_time
+        210:   --- average_predeadline_submission_time
         301:   * std_hours_working
         302:   --- time_to_react
     '''
@@ -110,7 +110,7 @@ if __name__ == "__main__":
 #        Preprocess for features extraction
              'P1','P2','P3','P4','P5','P6',
 #        Feature extraction without collab
-             1,2,6,7,8,9,10,11,12,13,15,16,17,18,109,110,111,112,202,203,204,205,206,207,208,209,210,
+             1,2,6,7,8,9,10,11,12,13,15,16,17,18,109,110,111,112,202,203,204,205,206,207,208,209,210,302,
 #        Feature extraction collab
              3,4,5,14,103,104,105,201,301,
              ]
