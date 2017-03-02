@@ -278,14 +278,14 @@ INSERT INTO `collaboration_types` (`collaboration_type_id`, `collaboration_type_
 
 -- collaborations table
 CREATE TABLE collaborations (
-  collaboration_id int(11) NOT NULL PRIMARY KEY,
-  user_id int(11) NOT NULL,
+  collaboration_id char(36) NOT NULL PRIMARY KEY,
+  user_id char(40) NOT NULL,
   collaboration_type_id int(11) NOT NULL,
   collaboration_content text NULL,
   collaboration_timestamp datetime NOT NULL,
   collaboration_parent_id int(11) DEFAULT NULL,
   collaboration_child_number int(11) DEFAULT NULL,
-  collaborations_ip int(11) DEFAULT NULL,
+  collaborations_ip char(3) DEFAULT NULL,
   collaborations_os int(11) DEFAULT NULL,
   collaborations_agent int(11) DEFAULT NULL,
   resource_id int(11) DEFAULT NULL,

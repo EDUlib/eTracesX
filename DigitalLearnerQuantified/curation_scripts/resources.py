@@ -38,7 +38,7 @@ def string_contains_word(string,word):
 
 # Return the list of the resource_type_names in order of appearance in resource_types table
 def extract_resource_types(conn):
-    command='select resource_type_id,resource_type_name from resource_types;'
+    command='select resource_type_id,resource_type_content from resource_types;'
     cursor = conn.cursor()
     cursor.execute(command)
     c = cursor.fetchall()

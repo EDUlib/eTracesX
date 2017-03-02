@@ -656,7 +656,7 @@ class EdXTrackLogJSONParser(object):
             elif eventType == 'add-instructor' or eventType == 'remove-instructor':        
                 self.handleAddRemoveInstructor(record, event)
                 return
-            
+
             elif eventType in ['list-forum-admins', 'list-forum-mods', 'list-forum-community-TAs']:
                 self.handleListForumMatters(record, event)
                 return
@@ -701,6 +701,14 @@ class EdXTrackLogJSONParser(object):
             elif eventType == 'edx.forum.searched':
                 self.handleForumEvent(record, event)
                 return
+            
+            elif eventType in ['edx.forum.comment.created',
+                               'edx.forum.response.created',
+                               'edx.forum.response.voted',
+                               'edx.forum.thread.created',
+                               'edx.forum.thread.voted']:
+                self.handleListForumInteraction(record, event)
+                return 
             
             # Event type values that start with slash:
             elif eventType[0] == '/':
@@ -3081,6 +3089,30 @@ class EdXTrackLogJSONParser(object):
         self.setValInRow('submission_id', str(event.get('query', None)))
         self.setValInRow('page', str(event.get('page', None)))
         self.setValInRow('success', str(event.get('total_results', None)))
+            
+    def handleListForumInteraction(self, record, event):
+        eventType = record['event_type']
+        if event is None:
+            self.logWarn("Track log line %s: missing event info in list-forum-admins, list-forum-mods, or list-forum-community-TAs." %\
+                         (self.makeFileCitation()))
+            return
+        event = self.ensureDict(event) 
+        if event is None:
+            self.logWarn("Track log line %s: event is not a dict in list-forum-admins, list-forum-mods, or list-forum-community-TAs event: '%s'" %\
+                         (self.makeFileCitation(), str(event)))
+            return
+        
+        if eventType == 'edx.forum.thread.created':
+            self.setValInRow('collaboration_type_id',1)
+        elif eventType == 'edx.forum.response.created':
+            self.setValInRow('collaboration_type_id',2)
+        elif eventType == 'edx.forum.comment.created':
+            self.setValInRow('collaboration_type_id',3)
+        elif eventType in ['edx.forum.response.voted','edx.forum.thread.voted']:
+            self.setValInRow('collaboration_type_id',4)
+        
+        self.setValInRow('collaboration_content', self.makeInsertSafe(event.get('body',None)))
+
                 
     def subHandleIsStudentCalibrated(self, eventDict):
         '''

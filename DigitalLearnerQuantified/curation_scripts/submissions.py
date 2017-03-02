@@ -73,7 +73,7 @@ def main(conn, conn2, dbName, startDate, currentDate, numWeeks, parent_conn = No
                 #if there is a correct answer already
                 #don't include our current submission
                 current_is_valid = True
-                if len(correct) == 0:
+                if len(correct) > 0:
                     current_is_valid = False
                 #if our current submission is a duplicate,
                 #don't include it

@@ -1,3 +1,5 @@
+import config as cfg
+
 class Event(object):
     '''
     Class generating taking care of the common event
@@ -60,12 +62,31 @@ class Event(object):
 
     def set_duration(self,end_time):
         '''
-        Computes the duration of an event in minutes, by taking the difference
+        Computes the duration of an event in seconds, by taking the difference
         between the event's timestamp and a given end time.
+        Set default duration if the duration is too long
         '''
-        self.duration = (end_time - self.data['time']).seconds/60
+        real_duration = int((end_time - self.data['time']).total_seconds())
+        self.duration = real_duration if real_duration <= cfg.MAX_DURATION_SECONDS else cfg.DEFAULT_DURATION_SECONDS
         
-    
+class ForumInteraction(Event):
+    def __init__(self,polished_event):
+        super(ForumInteraction,self).__init__(polished_event)    
+
+    def get_collaboration_row(self):
+        return { 'collaboration_id':self['_id'],
+                 'user_id':self['anon_screen_name'],
+                 'collaboration_type_id':self['collaboration_type_id'],
+                 'collaboration_timestamp':self['time'],
+                 'collaboration_content':self['collaboration_content'],
+                 'collaborations_ip':self['ip'],
+                 'collaborations_os':self['os'],
+                 'collaborations_agent':self['agent'],
+                 # Additional fields, not in MOOCdb documentation (yet)
+                 'resource_id':self['resource_id'],
+                 'collaboration_parent_id':-1,
+                 'collaboration_child_number':-1                 
+        }
 
 class VideoInteraction(Event):
     '''

@@ -6,6 +6,11 @@ EDX_TRACK_EVENT_LOG = '/Users/leducni/Documents/DATA/COURS/logs-anon.txt'
 ## Output files
 DEST_DIR = '/Users/leducni/Documents/DATA/COURS/MOOCDB/'
 
+## Acceptable duration
+MIN_DURATION_SECONDS = 10
+MAX_DURATION_SECONDS = 3600
+DEFAULT_DURATION_SECONDS = 100
+
 ## Input source
 ## Can be either 'csv', 'sql' or 'json'
 INPUT_SOURCE = 'json'

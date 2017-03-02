@@ -1,4 +1,5 @@
 from helperclasses import *
+import datetime
 
 class EventManager():
         
@@ -57,6 +58,7 @@ class EventManager():
     def serialize(self):
 
         for e in self.STAGED_EVENTS.values():
+            e.set_duration(datetime.datetime.max)
             self.observed_events.store(e.get_observed_event_row())
             
 

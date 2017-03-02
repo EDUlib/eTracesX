@@ -22,7 +22,7 @@ def main(conn, conn2, dbName, startDate, currentDate, numWeeks, parent_conn = No
             for feature_id in features.keys():
                 name = features[feature_id]['name']
                 description = features[feature_id]['desc']
-                values.append("(%s, '%s','%s')," % (feature_id,name,description))
+                values.append("('%s', '%s','%s')," % (feature_id,name,description))
             values[-1] = values[-1][:-1]
             values.append(';')
             values = "".join(values)

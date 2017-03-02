@@ -40,19 +40,20 @@ def main(dbName=None, userName=None, passwd=None, dbHost=None,
 if __name__ == "__main__":
     '''
     ULB: 16 mars 2015 
+    ITES: 13 septembre 2015 - 14 semaines
     
     Scripts:
         C1:    initial_preprocessing
         C2:    add_submissions_validity_column
         C3:    problems_populate_problem_week
         C4:    users_populate_user_last_submission_id
-        C5:    modify_durations
+        C5:    OBSOLETE: modify_durations
         C6:    curate_submissions
         C7:    curate_observed_events
-        C8:    --- populate_resource_type
+        C8:    populate_resource_type
         
         P1:    create_longitudinal_features
-        P2:    --- populate_longitudinal_features
+        P2:    populate_longitudinal_features
         P3:    create_models_table
         P4:    create_experiments_table
         P5:    create_user_longitudinal_feature_values
@@ -103,14 +104,16 @@ if __name__ == "__main__":
          #This date is year-month-day
          startDate         = '2015-03-16 00:00:00',
          numWeeks          = 15,
+         scripts_to_run = [
 #        Curation of MOOCdb
-         scripts_to_run = ['C1','C2','C3','C4','C5','C6','C7']
+             'C1','C2','C3','C4','C6','C7','C8',
 #        Preprocess for features extraction
-#         scripts_to_run = ['P1','P3','P4','P5','P6']
+             'P1','P2','P3','P4','P5','P6',
 #        Feature extraction without collab
-#         scripts_to_run = [1,2,6,7,8,9,10,11,12,13,15,16,17,18,109,110,111,112,202,203,204,205,206,207,208,209,210]
+             1,2,6,7,8,9,10,11,12,13,15,16,17,18,109,110,111,112,202,203,204,205,206,207,208,209,210,
 #        Feature extraction collab
-#         scripts_to_run = [3,4,5,14,103,104,105,201,301]
+             3,4,5,14,103,104,105,201,301,
+             ]
 
 #        List of all scripts ... see description above and in the dictionary
 #         scripts_to_run = ['C1','C2','C3','C4','C5','C6','C7','C8']

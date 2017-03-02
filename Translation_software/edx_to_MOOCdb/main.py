@@ -8,6 +8,7 @@ import getopt
 
 from events import *
 from resources import *
+from collaboration import *
 from eventformatter import *
 from eventmanager import *
 from helperclasses import *
@@ -38,6 +39,7 @@ def main():
     resource_manager = ResourceManager(moocdb, HIERARCHY_ROOT='https://', CONFIG_PATH = CONFIG_DIR)
     event_manager = EventManager(moocdb)
     submission_manager = SubmissionManager(moocdb)
+    collaboration_manager = CollaborationManager(moocdb) 
     curation_helper = CurationHelper(MOOCDB_DIR)
     
     print '**Processing events**' 
@@ -64,6 +66,7 @@ def main():
 
         # Store submission, assessment and problem
         submission_manager.update_submission_tables(event)
+        collaboration_manager.update_collaboration_table(event)
 
         # Record curation hints
         curation_helper.record_curation_hints(event)
@@ -78,6 +81,7 @@ def main():
     event_manager.serialize()
     resource_manager.serialize(pretty_print_to=HIERARCHY)
     submission_manager.serialize(pretty_print_to=PB_HIERARCHY)
+    collaboration_manager.serialize(pretty_print_to=PB_HIERARCHY)    
     curation_helper.serialize()
 
     print '* Writing resource hierarchy to : ' + HIERARCHY
