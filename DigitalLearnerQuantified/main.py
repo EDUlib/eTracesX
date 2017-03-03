@@ -1,6 +1,8 @@
 import scripts_runner as sr
 import getpass
 import datetime
+import getopt
+import sys
 #from DigitalLearnerQuantified.feature_dict import returnAllFeatureSet
 
 def main(dbName=None, userName=None, passwd=None, dbHost=None,
@@ -38,6 +40,67 @@ def main(dbName=None, userName=None, passwd=None, dbHost=None,
     
 
 if __name__ == "__main__":
+    databaseFromDict = None
+    database = None
+    startdate = None
+    enddate = None
+    numweeks = None
+    try:
+        opts, args = getopt.getopt(sys.argv[1:],"hd:s:n:e:D:",["startdate=","database=","numweeks=","enddate=","databasedict"])
+    except getopt.GetoptError:
+        print 'main.py -d <database> -s <start date:YYYY-MM-DD> (-e <end date:YYYY-MM-DD>|-n <num weeks>)'
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print 'main.py -d <database> -s <start date:YYYY-MM-DD> (-e <end date:YYYY-MM-DD>|-n <num weeks>)'
+            sys.exit()
+        elif opt in ("-D", "--databasedict"):
+            databaseFromDict = arg
+        elif opt in ("-d", "--database"):
+            database = arg
+        elif opt in ("-s", "--startdate"):
+            startdate = arg
+        elif opt in ("-e", "--enddate"):
+            enddate = arg
+        elif opt in ("-n", "--numweeks"):
+            numweeks = int(arg)
+    
+    databaseDict = {
+        'TEST-ITES': {'database':'MOOCdb_TEST_ITES', 'startdate':'2015-09-13','enddate':'2015-12-15','numweeks':None},
+        'TEST-ULB': {'database':'MOOCdb_TEST_ULB', 'startdate':'2015-03-16','enddate':None,'numweeks':'15'},
+        'ITES': {'database':'MOOCdb_ITES', 'startdate':'2015-09-13','enddate':'2015-12-15','numweeks':None},
+        'ULB': {'database':'MOOCdb_ULB', 'startdate':'2015-03-16','enddate':None,'numweeks':'15'},
+        }
+    
+    if databaseFromDict != None:
+        if database != None or startdate != None or enddate != None or numweeks != None or databaseFromDict not in databaseDict.keys():
+            print 'Argument ERROR!' 
+            print 'main.py -d <database> -s <start date:YYYY-MM-DD> (-e <end date:YYYY-MM-DD>|-n <num weeks>)'
+            sys.exit()
+        database = databaseDict[databaseFromDict]['database']
+        startdate = databaseDict[databaseFromDict]['startdate']
+        enddate = databaseDict[databaseFromDict]['enddate']
+        numweeks = databaseDict[databaseFromDict]['numweeks']
+
+    if (enddate == None and numweeks == None) or (enddate != None and numweeks != None):
+        print 'Argument ERROR!' 
+        print 'main.py -d <database> -s <start date:YYYY-MM-DD> (-e <end date:YYYY-MM-DD>|-n <num weeks>)'    
+        sys.exit()
+    if numweeks == None:
+        numweeks = (datetime.datetime.strptime(enddate,'%Y-%m-%d') - datetime.datetime.strptime(startdate,'%Y-%m-%d')).days/7+1
+    if numweeks == None or database == None or startdate == None:
+        print 'Argument ERROR!' 
+        print 'main.py -d <database> -s <start date:YYYY-MM-DD> (-e <end date:YYYY-MM-DD>|-n <num weeks>)'    
+        sys.exit()
+        
+    startdate = str(datetime.datetime.strptime(startdate,'%Y-%m-%d'))
+    
+    print 'Database Dictionary entry is : ',databaseFromDict
+    print 'Database is : ',database
+    print 'Start date is : ', startdate
+    print 'End date is : ', enddate
+    print 'Number of weeks is : ',numweeks
+
     '''
     ULB: 16 mars 2015 
     ITES: 13 septembre 2015 - 14 semaines
@@ -97,13 +160,13 @@ if __name__ == "__main__":
         301:   * std_hours_working
         302:   --- time_to_react
     '''
-    main(dbName            = 'MOOCdb_TEST_ULB',
+    main(dbName            = database,
          userName           = 'root',
          passwd             = '',
 #         timeout           = 1800,
          #This date is year-month-day
-         startDate         = '2015-03-16 00:00:00',
-         numWeeks          = 15,
+         startDate         = startdate,
+         numWeeks          = numweeks,
          scripts_to_run = [
 #        Curation of MOOCdb
              'C1','C2','C3','C4','C6','C7','C8',

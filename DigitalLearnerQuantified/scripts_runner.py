@@ -47,10 +47,11 @@ def runAllScripts(dbName, userName, passwd, host, port, startDate,
         success = extractFeature(dbName, userName, passwd, host, port, startDate,
                                 currentDate, numWeeks, script, timeout)
         if not success:
-            cont = ""
-            while not (cont == "y" or cont == "n"):
-                cont = raw_input("Continue with rest of feature extraction? (y/n)")
-            if cont == "n":
-                break
+            print "Script #" + str(script) + " FAILED TO RUN!"
+#            cont = ""
+#            while not (cont == "y" or cont == "n"):
+#                cont = raw_input("Continue with rest of feature extraction? (y/n)")
+#            if cont == "n":
+#                break
 
 
