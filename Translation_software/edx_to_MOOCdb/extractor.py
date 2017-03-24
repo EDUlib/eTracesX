@@ -6,6 +6,7 @@ import json
 import pandas as pd
 import config as cfg
 import edxTrackLogJSONParser
+import gzip
 
 def get_events():
     src = cfg.INPUT_SOURCE
@@ -106,7 +107,10 @@ class JSONExtractor(object):
         try:
             self.logsToProcess = []
             self.jsonParserInstance = edxTrackLogJSONParser.EdXTrackLogJSONParser()
-            self.events_log = open(edx_track_event_log)
+            if edx_track_event_log.endswith(".gz"):
+                self.events_log = gzip.open(edx_track_event_log)
+            else:
+                self.events_log = open(edx_track_event_log)
         except IOError as e:
             print 'Unable to open EdxTrackEvent log file : %s'% edx_track_event_log
             exit

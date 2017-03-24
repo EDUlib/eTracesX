@@ -43,7 +43,7 @@ def executeSQL(connection,command,parent_conn = None):
         cur = connection.cursor()
         #make sure actually does something
         if sqlparse.parse(statement):
-            print "executing SQL statement"
+#            print "executing SQL statement : " +  statement
             cur.execute(statement)
         cur.close()
     connection.commit()

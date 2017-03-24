@@ -2,7 +2,10 @@ DEFINITIONS
 <SOURCE>	: Repertoire du projet eTracesX (Github)
 <DATA>		: Repertoire des donnees
 <COURS> 	: Repertoire du cours
-
+<DATABASE>	: Base de donnees MySQL contenant la MOOCdb du cours (normalement MOOCdb_<COURS>
+<STARTDATE>	: Date de debut du MOOC en format numerique YYYY-MM-DD
+<ENDDATE>	: Date de la fin du MOOC en format numerique YYYY-MM-DD
+<NUMWEEKS>	: Duree du MOOC en semaines
 
 STRUCTURE DES REPERTOIRES
 /<DATA>/<COURS>/LOGS 	: Logs du cours a traiter
@@ -12,19 +15,18 @@ STRUCTURE DES REPERTOIRES
 
 PROCEDURE
 Extraire les indicateurs
-	Preparer la MOOCdb
 	cd /<SOURCE>/DigitalLearnerQuantified
-	Editer main.py (fonction __main__)
-		dbName = 'MOOCdb_TEST_ULB',
- 		startDate = '2015-03-16 00:00:00', #This date is year-month-day
- 	        numWeeks = 15,
+	OPTIONNEL: Editer main.py (fonction __main__) pour choisir les scripts a executer
 		Inscrire la liste des scripts a executer entre les les balises (ou decommenter une/des listes)
 	        scripts_to_run = [
 				 ]
 		ATTENTION: Certains indicateurs dependent d'autres, il faut donc les inscrire dans le bon ordre
 		ATTENTION: Les scripts P? effacent TOUTES les données extraites et les tests réalisés
 		Normalement on execute dans l'ordre les scripts C? et P? pour terminer par la liste des indicateurs a extraire (en ordre croissant)
-	python main.py
+	python main.py -d <DATABASE> -s <STARTDATE> -e <ENDDATE> > /<DATA>/<COURS>/FeatureExtraction.log &
+		OU (si on connait la date de fin ou le nombre de semaines)
+	python main.py -d <DATABASE> -s <STARTDATE> -n <NUMWEEKS> > /<DATA>/<COURS>/FeatureExtraction.log &
+
 Rouler le stopout prediction du MIT
 	cd /<SOURCE>/Stopout-Prediction
 	
