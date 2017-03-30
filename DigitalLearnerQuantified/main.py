@@ -66,10 +66,43 @@ if __name__ == "__main__":
             numweeks = int(arg)
     
     databaseDict = {
-        'TEST-ITES': {'database':'MOOCdb_TEST_ITES', 'startdate':'2015-09-13','enddate':'2015-12-15','numweeks':None},
-        'TEST-ULB': {'database':'MOOCdb_TEST_ULB', 'startdate':'2015-03-16','enddate':None,'numweeks':'15'},
+        'ENT-102.3-A2016': {'database':'MOOCdb_ENT_102_3_A2016', 'startdate':'2016-11-14','enddate':'2017-04-24','numweeks':None},
+        'DDI101.2-H2017': {'database':'MOOCdb_DDI101_2_H2017', 'startdate':'2017-02-01','enddate':'2017-04-01','numweeks':None},
+        'TEKPHY1-H2017': {'database':'MOOCdb_TEKPHY1_H2017', 'startdate':'2017-02-15','enddate':'2017-03-31','numweeks':None},
+        'IFT-Info-Theo-H2016': {'database':'MOOCdb_IFT_Info_Theo_H2016', 'startdate':'2017-02-26','enddate':'2017-05-25','numweeks':None},
+        'OAS.2-P2017': {'database':'MOOCdb_OAS_2_P2017', 'startdate':'2017-02-28','enddate':'2017-07-15','numweeks':None},
+
+        'ENT-103.1-H2017': {'database':'MOOCdb_ENT_103_1_H2017', 'startdate':'2017-03-13','enddate':'2017-04-30','numweeks':None},
+#        'GRH-101-A2015': {'database':'MOOCdb_GRH_101_A2015', 'startdate':'','enddate':'','numweeks':None}, # En Tout Temps - A Votre Rythme
+#        'GRH-101.1-H2013': {'database':'MOOCdb_GRH_101_1_H2013', 'startdate':'','enddate':'','numweeks':None}, # GRH-101.1???
+#        'MKT-101-H2015': {'database':'MOOCdb_MKT_101_H2015', 'startdate':'','enddate':'','numweeks':None}, # En Tout Temps - A Votre Rythme
+#        'MKT-101.2-P2014': {'database':'MOOCdb_MKT_101_2_P2014', 'startdate':'','enddate':'','numweeks':None}, # MKT-101.2???
+   
+#        'MKT-101.1-H2012': {'database':'MOOCdb_MKT_101_1_H2012', 'startdate':'','enddate':'','numweeks':None}, # MKT-101.1???
+        'MAN-102.1-A2016': {'database':'MOOCdb_MAN_102_1_A2016', 'startdate':'2016-11-14','enddate':'2017-02-20','numweeks':None},
+        'MAN-101.1-A2016': {'database':'MOOCdb_MAN_101_1_A2016', 'startdate':'2016-11-14','enddate':'2017-02-20','numweeks':None},
+        'CHE101.3-A2016': {'database':'MOOCdb_CHE101_3_A2016', 'startdate':'2016-11-02','enddate':'2017-01-15','numweeks':None},
+        'DDI101-A2015': {'database':'MOOCdb_DDI101_A2015', 'startdate':'2016-09-14','enddate':'2016-11-14','numweeks':None},
+
+        'OAS.1-P2016': {'database':'MOOCdb_OAS_1_P2016', 'startdate':'2016-08-08','enddate':'2016-10-25','numweeks':None},
+        'ENT-102.2-P2016': {'database':'MOOCdb_ENT_102_2_P2016', 'startdate':'2016-05-16','enddate':'2016-06-30','numweeks':None},
+        'COL-101.1-H2016': {'database':'MOOCdb_COL_101_1_H2016', 'startdate':'2016-05-16','enddate':'2016-06-27','numweeks':None},
+        'PRC.2-P2016': {'database':'MOOCdb_PRC_2_P2016', 'startdate':'2016-04-04','enddate':'2016-06-11','numweeks':None},
+        'CHE101.2-P2016': {'database':'MOOCdb_CHE101_2_P2016', 'startdate':'2016-04-12','enddate':'2016-06-07','numweeks':None},
+
+        'ENT-101.2-H2016': {'database':'MOOCdb_ENT_101_2_H2016', 'startdate':'2016-03-28','enddate':'2016-05-26','numweeks':None},
+        'SC101.2-H2015': {'database':'MOOCdb_SC101_2_H2015', 'startdate':'2015-12-14','enddate':'2016-03-21','numweeks':None},
+        'CHE101.1-E2015': {'database':'MOOCdb_CHE101_1_E2015', 'startdate':'2015-11-08','enddate':'2016-01-12','numweeks':None},
+#        'CHE101.1-P2015': {'database':'MOOCdb_CHE101_1_P2015', 'startdate':'','enddate':'','numweeks':None}, # CHE101???
+        'PRC.1-P2015': {'database':'MOOCdb_PRC_1_P2015', 'startdate':'2015-10-05','enddate':'2015-12-15','numweeks':None},
+
+        'ITES.1-P2015': {'database':'MOOCdb_ITES_1_P2015', 'startdate':'2015-09-13','enddate':'2015-12-15','numweeks':None},
+        'ENT-102.1-P2015': {'database':'MOOCdb_ENT_102_1_P2015', 'startdate':'2015-05-25','enddate':'2015-07-28','numweeks':None},
+    
         'ITES': {'database':'MOOCdb_ITES', 'startdate':'2015-09-13','enddate':'2015-12-15','numweeks':None},
         'ULB': {'database':'MOOCdb_ULB', 'startdate':'2015-03-16','enddate':None,'numweeks':'15'},
+        'TEST-ITES': {'database':'MOOCdb_TEST_ITES', 'startdate':'2015-09-13','enddate':'2015-12-15','numweeks':None},
+        'TEST-ULB': {'database':'MOOCdb_TEST_ULB', 'startdate':'2015-03-16','enddate':None,'numweeks':'15'},
         }
     
     if databaseFromDict != None:
