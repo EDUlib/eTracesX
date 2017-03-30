@@ -1,5 +1,14 @@
+import sys
+import getopt
 import MySQLdb
 import MySQLdb.cursors as cursors
+
+SEQ_LEN = 97
+INTERVAL_DELAY = 15 # in second
+NEW_SESSION_DELAY = 3600000000 # in second
+TRUNCATE_SEQ = False
+SESSION_BY_VIDEO = False # Create a new session for each video viewed
+KEEP_ALL = False
 
 type_dict = {'stop_video' : 'St',
              'speed_change_video' : 'Sp',
@@ -9,48 +18,132 @@ type_dict = {'stop_video' : 'St',
              'load_video' : 'Lo'             
             }
 
+def print_header(outputFile):
+    header = 'ID'
+    for i in range(1,SEQ_LEN+1):
+        header += '|T' + format(i, '03')
+    header += '\n'
+    outputFile.write(header)
+#    print 'ID|T1|T2|T3|T4|T5|T6|T7|T8|T9|T10|T11|T12|T13|T14|T15|T16|T17|T18|T19|T20|T21|T22|T23|T24|T25|T26|T27|T28|T29|T30|T31|T32|T33|T34|T35|T36|T37|T38|T39|T40|T41|T42|T43|T44|T45|T46|T47|T48|T49|T50|T51|T52|T53|T54|T55|T56|T57|T58|T59|T60|T61|T62|T63|T64|T65|T66|T67|T68|T69|T70|T71|T72|T73|T74|T75|T76|T77|T78|T79|T80|T81|T82|T83|T84|T85|T86|T87|T88|T89|T90|T91|T92|T93|T94|T95|T96|T97'
+
+def print_sequence(cur_user, cur_seq, outputFile):
+    count = 0;
+    cur_line = cur_user
+    for event in cur_seq:
+        cur_line += '|' + event
+        count += 1
+        if count % SEQ_LEN == 0:
+            cur_line += '\n'
+            outputFile.write(cur_line)
+            if TRUNCATE_SEQ:
+                return
+            cur_line = cur_user
+            count = 0
+    if count > 0:
+        for i in range(count,SEQ_LEN):
+            cur_line += '|NA'
+        cur_line += '\n'
+        outputFile.write(cur_line)
+            
 if __name__ == "__main__":
-    conn = MySQLdb.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='MOOCdb_ULB', cursorclass=cursors.SSCursor)
+    mooc_db = ''
+    outputFileName = ''
+
+    try:
+        opts, args = getopt.getopt(sys.argv[1:],"had:i:l:o:s:tv",["database=","output=","keep-all","interval=","seq-length=","session-delay=","truncate","video-split"])
+    except getopt.GetoptError:
+        print 'test.py -d <databaseName> -o <outputFile> [-a -i <timeInterval> -l <sequenceLength> -s <sessionDelay> -t -v]'
+        print "a: keep all events"
+        print "t: truncate the sequence"
+        print "v: create a sequence for each video"
+        print "Default values a:F i:15 l:97 s:3600000000 t:F v:F"
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print 'test.py -d <databaseName> -o <outputFile> [-a -i <timeInterval> -l <sequenceLength> -s <sessionDelay> -t -v]'
+            print "a: keep all events"
+            print "t: truncate the sequence"
+            print "v: create a sequence for each video"
+            print "Default values a:F i:15 l:97 s:3600000000 t:F v:F"
+            sys.exit()
+        elif opt in ("-a", "--keep-all"):
+            KEEP_ALL = True
+        elif opt in ("-d", "--database"):
+            mooc_db = arg
+        elif opt in ("-i", "--interval"):
+            INTERVAL_DELAY = int(arg)
+        elif opt in ("-l", "--seq-length"):
+            SEQ_LEN = int(arg)
+        elif opt in ("-o", "--output"):
+            outputFileName = arg
+        elif opt in ("-s", "--session-delay"):
+            NEW_SESSION_DELAY = int(arg)
+        elif opt in ("-t", "--truncate"):
+            TRUNCATE_SEQ = True
+        elif opt in ("-v", "--video-split"):
+            SESSION_BY_VIDEO = True
+    if mooc_db == '':
+        print 'test.py -d <databaseName> -o <outputFile> [-a -i <timeInterval> -l <sequenceLength> -s <sessionDelay> -t -v]'
+        print "a: keep all events"
+        print "t: truncate the sequence"
+        print "v: create a sequence for each video"
+        print "Default values a:F i:15 l:97 s:3600000000 t:F v:F"
+        sys.exit(2)
+
+    if outputFileName == '':
+        outputFileName = 'SEQ_' + mooc_db + '_a' + str(KEEP_ALL)[0] + '_i' + str(INTERVAL_DELAY) +\
+                        '_l' + str(SEQ_LEN) + '_s' + str(NEW_SESSION_DELAY) +\
+                        '_t' + str(TRUNCATE_SEQ)[0] + '_v' + str(SESSION_BY_VIDEO)[0] + '.txt'
+
+    outputFile = open(outputFileName, 'w')
+    
+    conn = MySQLdb.connect(host='127.0.0.1', port=3306, user='root', passwd='', db=mooc_db, cursorclass=cursors.SSCursor)
     cursor = conn.cursor()
 #    cursor.execute("SELECT DISTINCT(user_id) FROM observed_events")
-    cursor.execute("SELECT user_id,observed_event_timestamp,observed_event_duration, observed_event_type_id " +
+    cursor.execute("SELECT user_id,observed_event_timestamp,observed_event_duration, observed_event_type_id, url_id " +
                     "FROM observed_events " +
                     "WHERE observed_event_type_id IN ('stop_video','speed_change_video','seek_video','play_video','pause_video','load_video') " + 
                     "ORDER BY user_id,observed_event_timestamp")
-    count = 0
     cur_user = ''
-    cur_line = ''
-    print 'ID|T1|T2|T3|T4|T5|T6|T7|T8|T9|T10|T11|T12|T13|T14|T15|T16|T17|T18|T19|T20|T21|T22|T23|T24|T25|T26|T27|T28|T29|T30|T31|T32|T33|T34|T35|T36|T37|T38|T39|T40|T41|T42|T43|T44|T45|T46|T47|T48|T49|T50|T51|T52|T53|T54|T55|T56|T57|T58|T59|T60|T61|T62|T63|T64|T65|T66|T67|T68|T69|T70|T71|T72|T73|T74|T75|T76|T77|T78|T79|T80|T81|T82|T83|T84|T85|T86|T87|T88|T89|T90|T91|T92|T93|T94|T95|T96|T97'
-    for user_id, event_ts, event_dur, event_type in cursor.fetchall():
+    cur_seq = []
+    prev_ts = ''
+    prev_video = -1
+    print_header(outputFile)
+    for user_id, event_ts, event_dur, event_type, cur_video in cursor.fetchall():
         if cur_user == '':
             cur_user = user_id
-            cur_line = user_id
+            cur_seq = []
+            prev_ts = event_ts
+            prev_video = cur_video
         if cur_user != user_id:
+            print_sequence(cur_user, cur_seq, outputFile)
+            cur_seq = []
             cur_user = user_id
-            if count > 0:
-                for i in range(count,97):
-                    cur_line += '|NA'
-                print cur_line
-                count = 0
-            cur_line = user_id
-        if event_dur//15 > 0:
-            nb_to_add = event_dur//15
-            while nb_to_add + count >= 97:
-                nb_to_add = nb_to_add - (97 - count)
-                for i in range(count,97):
-                    cur_line += '|' + type_dict[event_type]
-                print cur_line
-                cur_line = user_id
-                count = 0
-            for i in range(0,nb_to_add):
-                cur_line += '|' + type_dict[event_type]
-            count += nb_to_add
+            prev_ts = event_ts
+            prev_video = cur_video
+        if (int((event_ts - prev_ts).total_seconds()) > NEW_SESSION_DELAY):
+            print_sequence(cur_user, cur_seq, outputFile)
+            cur_seq = []
+            cur_user = user_id
+            prev_ts = event_ts
+            prev_video = cur_video
+        if prev_video != cur_video and SESSION_BY_VIDEO: # TODO... 
+            print_sequence(cur_user, cur_seq, outputFile)
+            cur_seq = []
+            cur_user = user_id
+            prev_ts = event_ts
+            prev_video = cur_video
+        prev_ts = event_ts
+        prev_video = cur_video
+        nb_to_add = event_dur//INTERVAL_DELAY
+        if KEEP_ALL:
+            nb_to_add += 1
+        for i in range(0,nb_to_add):
+            cur_seq.append(type_dict[event_type])
 #        print user_id + str(event_ts) + str(event_dur) + event_type
-    if count > 0:
-        for i in range(count,97):
-            cur_line += '|NA'
-        print cur_line        
+    print_sequence(cur_user,cur_seq, outputFile)
         
     cursor.close()
     conn.close()
+    outputFile.close()
 #    print 'DONE!'
