@@ -37,6 +37,11 @@ def print_sequence_pct(cur_user, cur_line):
             '|' + format(cur_line.count('Se')/float(SEQ_LEN), '0.4f') + '|' + format(cur_line.count('Sp')/float(SEQ_LEN), '0.4f') +\
             '|' + format(cur_line.count('St')/float(SEQ_LEN), '0.4f') + '|' + format(cur_line.count('NA')/float(SEQ_LEN), '0.4f')
 
+#    print cur_user + '|' + str(cur_line.count('Lo')) +\
+#            '|' + str(cur_line.count('Pa')) + '|' + str(cur_line.count('Pl')) +\
+#            '|' + str(cur_line.count('Se')) + '|' + str(cur_line.count('Sp')) +\
+#            '|' + str(cur_line.count('St')) # + '|' + str(cur_line.count('NA'))
+
 #    print cur_user + '|' + str(cur_line.count('Lo')/float(SEQ_LEN)) +\
 #            '|' + str(cur_line.count('Pa')/float(SEQ_LEN)) + '|' + str(cur_line.count('Pl')/float(SEQ_LEN)) +\
 #            '|' + str(cur_line.count('Se')/float(SEQ_LEN)) + '|' + str(cur_line.count('Sp')/float(SEQ_LEN)) +\

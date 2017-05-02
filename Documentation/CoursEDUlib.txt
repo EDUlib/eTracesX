@@ -1,54 +1,56 @@
+DigitalLearnerQuantified/main.py
+Scripts/SplitLogsEdulib
 
 
-Processus de raisonnement clinique					Université de Montréal	01 avr 2017	13 mai 2017	PRC.3		course-v1:UMontreal+PRC.3+P2017		course-v1:UMontreal+PRC.3+P2017
-TEKPHY — Activité physique et dépense énergétique			Université de Montréal	Avril 2017			TEKPHY2		course-v1:UMontreal+TEKPHY2+P2017	course-v1:UMontreal+TEKPHY2+P2017
-Neuroscience : parole et musique					UdeM et ULB (G3)	18 avr 2017	30 juin 2017	BRAMS.2		course-v1:UMontreal+BRAMS.2+P2017	course-v1:UMontreal+BRAMS.2+P2017
-La chimie, en route vers le génie II					Polytechnique Montréal	29 Mars 2017	24 mai 2017	CHE102		course-v1:PolyMtl+CHE102+P2017		course-v1:PolyMtl+CHE102+P2017
-Décisions financières et gestion budgétaire				HEC Montréal		30 avr 2017	11 juin 2017	SC-102.1	HEC/SC-102.1/A2015			HEC/SC-102.1/A2015
-Clinical Reasoning Process						Université de Montréal	01 mai 2017	12 juin 2017	CRP.1		course-v1:UMontreal+CRP.1+A2016		course-v1:UMontreal+CRP.1+A2016
+
+TEKPHY — Analyse du mouvement						Université de Montréal	24 Mai 2017	30 Juil 2017	TEKPHY3		course-v1:UMontreal+TEKPHY3+P2017	course-v1:UMontreal+TEKPHY3+P2017
 
 -------------------------
 
-Réussir son démarrage d'entreprise - L'approche SynOpp			HEC Montréal		14 nov 2016	24 avr 2017	ENT-102.3	course-v1:HEC+ENT-102.3+A2016		course-v1:HEC+ENT-102.3+A2016
-L'ingénieur, source de solutions durables				Polytechnique Montréal	1 Février 2017	01 avr 2017	DDI101.2	course-v1:PolyMtl+DDI101.2+H2017	course-v1:PolyMtl+DDI101.2+H2017
+Réussir son démarrage d'entreprise - L'approche SynOpp			HEC Montréal		14 nov 2016	19 juin 2017	ENT-102.3	course-v1:HEC+ENT-102.3+A2016		course-v1:HEC+ENT-102.3+A2016
+Vers les limites ultimes de l'informatique				Université de Montréal	26 févr 2017	28 mai 2017	IFT-Limites	course-v1:UMontreal+IFT-Info-Theo+H2016	course-v1:UMontreal+IFT-Info-Theo+H2016
 
-TEKPHY — Équilibre postural						Université de Montréal	15 févr 2017	31 mars 2017	TEKPHY1		course-v1:UMontreal+TEKPHY1+H2017	course-v1:UMontreal+TEKPHY1+H2017
-Vers les limites ultimes de l'informatique				Université de Montréal	26 févr 2017	25 mai 2017	IFT-Limites	course-v1:UMontreal+IFT-Info-Theo+H2016	course-v1:UMontreal+IFT-Info-Theo+H2016
 Outil d'aide à la scénarisation						Université de Montréal	28 févr 2017	15 juil 2017	OAS.2		course-v1:UMontreal+OAS.2+P2017		course-v1:UMontreal+OAS.2+P2017
-Entrepreneuriat familial						HEC Montréal		13 mars 2017	30 avr 2017	ENT-103.1	course-v1:HEC+ENT-103.1+H2017		course-v1:HEC+ENT-103.1+H2017
+Entrepreneuriat familial						HEC Montréal		13 mars 2017	30 juin 2017	ENT-103.1	course-v1:HEC+ENT-103.1+H2017		course-v1:HEC+ENT-103.1+H2017
+Processus de raisonnement clinique					Université de Montréal	01 avr 2017	13 mai 2017	PRC.3		course-v1:UMontreal+PRC.3+P2017		course-v1:UMontreal+PRC.3+P2017
+TEKPHY — Activité physique et dépense énergétique			Université de Montréal	5 Avril 2017	18 juin 2017	TEKPHY2		course-v1:UMontreal+TEKPHY2+P2017	course-v1:UMontreal+TEKPHY2+P2017
+Neuroscience : parole et musique					UdeM et ULB (G3)	18 avr 2017	30 juin 2017	BRAMS.2		course-v1:UMontreal+BRAMS.2+P2017	course-v1:UMontreal+BRAMS.2+P2017
 
-Gestion des conflits							HEC Montréal		En Tout Temps - À Votre Rythme	GRH-101		HEC/GRH-101/A2015			HEC/GRH-101/A2015
-Introduction au marketing						HEC Montréal		En Tout Temps - À Votre Rythme	MKT-101		HEC/MKT-101/H2015			HEC/MKT-101/H2015
+La chimie, en route vers le génie II					Polytechnique Montréal	19 Avril 2017	14 juin 2017	CHE102		course-v1:PolyMtl+CHE102+P2017		course-v1:PolyMtl+CHE102+P2017
+Décisions financières et gestion budgétaire				HEC Montréal		30 avr 2017	2 juil 2017	SC-102.1	HEC/SC-102.1/A2015			HEC/SC-102.1/A2015
+Clinical Reasoning Process						Université de Montréal	01 mai 2017	12 juin 2017	CRP.1		course-v1:UMontreal+CRP.1+A2016		course-v1:UMontreal+CRP.1+A2016
+Gestion des conflits							HEC Montréal		16 Nov 2015	À Votre Rythme	GRH-101		HEC/GRH-101/A2015			HEC/GRH-101/A2015
+Introduction au marketing						HEC Montréal		29 Avril 2015	À Votre Rythme	MKT-101		HEC/MKT-101/H2015			HEC/MKT-101/H2015
 
 -------------------------
+
+TEKPHY — Équilibre postural						Université de Montréal	15 févr 2017	30 avr 2017	TEKPHY1		course-v1:UMontreal+TEKPHY1+H2017	course-v1:UMontreal+TEKPHY1+H2017
+L'ingénieur, source de solutions durables				Polytechnique Montréal	1 Février 2017	01 avr 2017	DDI101.2	course-v1:PolyMtl+DDI101.2+H2017	course-v1:PolyMtl+DDI101.2+H2017
 
 Promouvoir la santé et l'efficacité au travail				HEC Montréal		14 nov 2016	20 févr 2017	MAN-102.1	course-v1:HEC+MAN-102.1+A2016		course-v1:HEC+MAN-102.1+A2016
 Le Management								HEC Montréal		14 nov 2016	20 févr 2017	MAN-101.1	course-v1:HEC+MAN-101.1+A2016		course-v1:HEC+MAN-101.1+A2016
-
 La chimie, en route vers le génie I					Polytechnique Montréal	02 nov 2016	15 janv 2017	CHE101.3	course-v1:PolyMtl+CHE101.3+A2016	course-v1:PolyMtl+CHE101.3+A2016
 L'ingénieur, source de solutions durables				Polytechnique Montréal	14 Sept 2016	14 nov 2016	DDI101		course-v1:PolyMtl+DDI101+A2015		course-v1:PolyMtl+DDI101+A2015
 Outil d’Aide à la Scénarisation pédagogique				Université de Montréal	8 Août 2016	25 oct 2016	ITES-OAS	course-v1:UMontreal+OAS.1+P2016		course-v1:UMontreal+OAS.1+P2016
-Réussir son démarrage d'entreprise - L'approche SynOpp			HEC Montréal		16 mai 2016	30 juin 2016	ENT-102.2	course-v1:HEC+ENT-102.2+P2016		course-v1:HEC+ENT-102.2+P2016
 
-L'évaluation participative de projets concertés				Dynamo +  HEC Montréal	16 Mai 2016	27 juin 2016	COL-101.1	course-v1:HEC+d101+H2016		course-v1:HEC+d101+H2016
+Réussir son démarrage d'entreprise - L'approche SynOpp			HEC Montréal		16 mai 2016	30 juin 2016	ENT-102.2	course-v1:HEC+ENT-102.2+P2016		course-v1:HEC+ENT-102.2+P2016
+L'évaluation participative de projets concertés				Dynamo +  HEC Montréal	12 Avril 2016	27 juin 2016	COL-101.1	course-v1:HEC+d101+H2016		course-v1:HEC+d101+H2016
 Processus de raisonnement clinique					Université de Montréal	4 Avril 2016	11 juin 2016	PRC.2		course-v1:UMontreal+PRC.2+P2016		course-v1:UMontreal+PRC.2+P2016
-La chimie, en route vers le génie					Polytechnique Montréal	12 Avril 2016	07 juin 2016	CHE101.2	course-v1:PolyMtl+CHE101.2+P2016	course-v1:PolyMtl+CHE101.2+P2016
-L'esprit entrepreneurial						HEC Montréal		28 Mars 2016	26 mai 2016	ENT-101.2	course-v1:HEC+ENT-101.2+H2016		course-v1:HEC+ENT-101.2+H2016
+La chimie, en route vers le génie					Polytechnique Montréal	5 Avril 2016	07 juin 2016	CHE101.2	course-v1:PolyMtl+CHE101.2+P2016	course-v1:PolyMtl+CHE101.2+P2016
+L'esprit entrepreneurial						HEC Montréal		21 Mars 2016	26 mai 2016	ENT-101.2	course-v1:HEC+ENT-101.2+H2016		course-v1:HEC+ENT-101.2+H2016
 
 Comprendre les états financiers						HEC Montréal		14 Déc 2015	21 mars 2016	SC-101.2	HEC/SC101.2/H2015			HEC/SC101.2/H2015
-La chimie, en route vers le génie					Polytechnique Montréal	8 Nov 2015	12 janv 2016	CHE101		course-v1:PolyMtl+CHE101.1+E2015	course-v1:PolyMtl+CHE101.1+E2015
-Processus de raisonnement clinique					Université de Montréal	5 Oct 2015	15 déc 2015	PRC		UMontreal/PRC.1/P2015			UMontreal/PRC.1/P2015
+La chimie, en route vers le génie					Polytechnique Montréal	1 Nov 2015	12 janv 2016	CHE101		course-v1:PolyMtl+CHE101.1+E2015	course-v1:PolyMtl+CHE101.1+E2015
 Innovations technopédagogiques en enseignement supérieur		Université de Montréal	13 Sept 2015	15 déc 2015	ITES		UMontreal/ITES.1/P2015			UMontreal/ITES.1/P2015
-
-Réussir son démarrage d'entreprise - L'approche SynOpp			HEC Montréal		25 Mai 2015	28 juil 2015	ENT-102.1	HEC/ENT-102.1/P2015			HEC/ENT-102.1/P2015
+Processus de raisonnement clinique					Université de Montréal	5 Oct 2015	15 déc 2015	PRC		UMontreal/PRC.1/P2015			UMontreal/PRC.1/P2015
+Réussir son démarrage d'entreprise - L'approche SynOpp			HEC Montréal		18 Mai 2015	28 juil 2015	ENT-102.1	HEC/ENT-102.1/P2015			HEC/ENT-102.1/P2015
 
 ------------------------- NOT IN LOGS -------------------------
 L'esprit entrepreneurial						HEC Montréal		27 oct 2014	27 déc 2014	ENT-101.1	HEC/ENT-101.1/A2014			HEC/ENT-101.1/A2014
 Introduction au marketing						HEC Montréal		01 avr 2014	15 juin 2014	MKT-101.2	HEC/MKT-101.2/P2014			HEC/MKT-101.2/P2014
 Gestion des conflits							HEC Montréal		28 oct 2013	31 déc 2013	GRH-101.1	HEC/GRH-101.1/H2013			HEC/GRH-101.1/H2013
-
 Problèmes et politiques économiques: outils essentiels d'analyse	HEC Montréal		13 mai 2013	01 juil 2013	EA-101.1	HEC/EA-101.1/P2013			HEC/EA-101.1/P2013
-Comprendre les états financiers						HEC Montréal		Automne 2015	11 juin 2013	SC-101.1	HEC/SC-101/P2013			HEC/SC-101/P2013
+Comprendre les états financiers						HEC Montréal		11 mars 2013	11 juin 2013	SC-101.1	HEC/SC-101/P2013			HEC/SC-101/P2013
 Introduction au marketing						HEC Montréal		22 oct 2012	30 déc 2012	MKT-101.1	HEC/MKT-101.1/H2012			HEC/MKT-101.1/H2012
 
 
