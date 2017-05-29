@@ -18,6 +18,14 @@ type_dict = {'stop_video' : 'St',
              'load_video' : 'Lo'             
             }
 
+type_val_dict = {'St' : '5',
+                 'Sp' : '4',
+                 'Se' : '3',
+                 'Pl' : '2',
+                 'Pa' : '1',
+                 'Lo' : '0'             
+                 }
+
 user_vid_count_dict = {}
 
 def print_header(outputFile):
@@ -40,12 +48,15 @@ def print_sequence(cur_user, cur_vid, time_stamp, cur_clic_seq, cur_dur_seq, cur
     print str(len(cur_clic_seq)) + " : " + str(len(cur_time_seq)) + " : S" + format(SEQ_COUNT,'06') + " : " + cur_user
     if (len(cur_clic_seq) > SEQ_CLIC_LEN or len(cur_time_seq) > SEQ_TIME_LEN) and DROP_TRUNCATE_SEQ:
         return
+#    if cur_clic_seq.count('Lo') == len(cur_clic_seq):  # len(cur_clic_seq) == 1 and cur_clic_seq[0] == 'Lo':
+#        return
     cur_line = 'S' + format(SEQ_COUNT,'06') + '|' + cur_user + '|' + str(cur_vid) + '|' + format(user_vid_count_dict[cur_user + str(cur_vid)], '03') + '|' + str(time_stamp)
     count = len(cur_clic_seq);
     if count > SEQ_CLIC_LEN:
         count = SEQ_CLIC_LEN
     for i in range(0, count):
-        cur_line += '|' + cur_clic_seq[i]
+#        cur_line += '|' + cur_clic_seq[i]
+        cur_line += '|' + type_val_dict[cur_clic_seq[i]]
     for i in range(count,SEQ_CLIC_LEN):    
         cur_line += '|NA'
     count = len(cur_dur_seq);
@@ -59,7 +70,8 @@ def print_sequence(cur_user, cur_vid, time_stamp, cur_clic_seq, cur_dur_seq, cur
     if count > SEQ_TIME_LEN:
         count = SEQ_TIME_LEN
     for i in range(0, count):
-        cur_line += '|' + cur_time_seq[i]
+#        cur_line += '|' + cur_time_seq[i]
+        cur_line += '|' + type_val_dict[cur_time_seq[i]]
     for i in range(count,SEQ_TIME_LEN):    
         cur_line += '|NA'
     cur_line += '\n'
