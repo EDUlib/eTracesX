@@ -15,6 +15,8 @@ PRINT_PCT = False
 type_dict = {'stop_video' : 'St',
              'speed_change_video' : 'Sp',
              'seek_video' : 'Se',
+             'seek_forward_video' : 'Sf',
+             'seek_back_video' : 'Sb',
              'play_video' : 'Pl',
              'pause_video' : 'Pa',
              'load_video' : 'Lo'             
@@ -29,34 +31,39 @@ def print_header(outputFile):
 #    print 'ID|T1|T2|T3|T4|T5|T6|T7|T8|T9|T10|T11|T12|T13|T14|T15|T16|T17|T18|T19|T20|T21|T22|T23|T24|T25|T26|T27|T28|T29|T30|T31|T32|T33|T34|T35|T36|T37|T38|T39|T40|T41|T42|T43|T44|T45|T46|T47|T48|T49|T50|T51|T52|T53|T54|T55|T56|T57|T58|T59|T60|T61|T62|T63|T64|T65|T66|T67|T68|T69|T70|T71|T72|T73|T74|T75|T76|T77|T78|T79|T80|T81|T82|T83|T84|T85|T86|T87|T88|T89|T90|T91|T92|T93|T94|T95|T96|T97'
 
 def print_header_pct():
-    print 'ID|Lo|Pa|Pl|Se|Sp|St|NA'
+    print 'ID|Lo|Pa|Pl|Sb|Sf|Se|Sp|St|NA'
     
 def print_sequence_pct(cur_user, cur_line):
     print cur_user + '|' + format(cur_line.count('Lo')/float(SEQ_LEN), '0.4f') +\
             '|' + format(cur_line.count('Pa')/float(SEQ_LEN), '0.4f') + '|' + format(cur_line.count('Pl')/float(SEQ_LEN), '0.4f') +\
+            '|' + format(cur_line.count('Sb')/float(SEQ_LEN), '0.4f') + '|' + format(cur_line.count('Sf')/float(SEQ_LEN), '0.4f') +\
             '|' + format(cur_line.count('Se')/float(SEQ_LEN), '0.4f') + '|' + format(cur_line.count('Sp')/float(SEQ_LEN), '0.4f') +\
             '|' + format(cur_line.count('St')/float(SEQ_LEN), '0.4f') + '|' + format(cur_line.count('NA')/float(SEQ_LEN), '0.4f')
 
 #    print cur_user + '|' + str(cur_line.count('Lo')) +\
 #            '|' + str(cur_line.count('Pa')) + '|' + str(cur_line.count('Pl')) +\
+#            '|' + str(cur_line.count('Sb')) + '|' + str(cur_line.count('Sf')) +\
 #            '|' + str(cur_line.count('Se')) + '|' + str(cur_line.count('Sp')) +\
 #            '|' + str(cur_line.count('St')) # + '|' + str(cur_line.count('NA'))
 
 #    print cur_user + '|' + str(cur_line.count('Lo')/float(SEQ_LEN)) +\
 #            '|' + str(cur_line.count('Pa')/float(SEQ_LEN)) + '|' + str(cur_line.count('Pl')/float(SEQ_LEN)) +\
+#            '|' + str(cur_line.count('Sb')/float(SEQ_LEN)) + '|' + str(cur_line.count('Sf')/float(SEQ_LEN)) +\
 #            '|' + str(cur_line.count('Se')/float(SEQ_LEN)) + '|' + str(cur_line.count('Sp')/float(SEQ_LEN)) +\
 #            '|' + str(cur_line.count('St')/float(SEQ_LEN)) + '|' + str(cur_line.count('NA')/float(SEQ_LEN))
 
 #    print cur_user + '|' + format(cur_line.count('Lo'), '03') +\
 #            '|' + format(cur_line.count('Pa'), '03') + '|' + format(cur_line.count('Pl'), '03') +\
+#            '|' + format(cur_line.count('Sb'), '03') + '|' + format(cur_line.count('Sf'), '03') +\
 #            '|' + format(cur_line.count('Se'), '03') + '|' + format(cur_line.count('Sp'), '03') +\
 #            '|' + format(cur_line.count('St'), '03') + '|' + format(cur_line.count('NA'), '03')
             
-#    seq_cumul_dict = {'Lo':0, 'Pa':0, 'Pl':0, 'Se':0, 'Sp':0, 'St':0, 'NA':0}
+#    seq_cumul_dict = {'Lo':0, 'Pa':0, 'Pl':0, 'Sb':0, 'Sf':0, 'Se':0, 'Sp':0, 'St':0, 'NA':0}
 #    for event in cur_seq:
 #        seq_cumul_dict[event] += 1
 #    print cur_user + '|' + str(seq_cumul_dict['Lo']/float(SEQ_LEN)) + '|' + str(seq_cumul_dict['Pa']/float(SEQ_LEN)) +\
-#                '|' + str(seq_cumul_dict['Pl']/float(SEQ_LEN)) + '|' + str(seq_cumul_dict['Se']/float(SEQ_LEN)) +\
+#                '|' + str(seq_cumul_dict['Pl']/float(SEQ_LEN)) + '|' + str(seq_cumul_dict['Sb']/float(SEQ_LEN)) +\
+#                '|' + str(seq_cumul_dict['Sf']/float(SEQ_LEN)) + '|' + str(seq_cumul_dict['Se']/float(SEQ_LEN)) +\
 #                '|' + str(seq_cumul_dict['Sp']/float(SEQ_LEN)) + '|' + str(seq_cumul_dict['St']/float(SEQ_LEN)) +\
 #                '|' + str(seq_cumul_dict['NA']/float(SEQ_LEN))
 
@@ -142,7 +149,7 @@ if __name__ == "__main__":
 #    cursor.execute("SELECT DISTINCT(user_id) FROM observed_events")
     cursor.execute("SELECT user_id,observed_event_timestamp,observed_event_duration, observed_event_type_id, url_id " +
                     "FROM observed_events " +
-                    "WHERE observed_event_type_id IN ('stop_video','speed_change_video','seek_video','play_video','pause_video','load_video') " + 
+                    "WHERE observed_event_type_id IN ('stop_video','speed_change_video','seek_video','seek_forward_video','seek_back_video','play_video','pause_video','load_video') " + 
                     "ORDER BY user_id,observed_event_timestamp")
     cur_user = ''
     cur_seq = []

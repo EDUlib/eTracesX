@@ -616,6 +616,8 @@ BEGIN
 	 an_event_type = 'problem_save' OR 
 	 an_event_type = 'problem_show' OR 
 	 an_event_type = 'rubric_select' OR 
+	 an_event_type = 'seek_back_video' OR 
+	 an_event_type = 'seek_forward_video' OR 
 	 an_event_type = 'seek_video' OR 
 	 an_event_type = 'seq_goto' OR 
 	 an_event_type = 'seq_next' OR 
@@ -654,6 +656,8 @@ BEGIN
 	 an_event_type = 'problem_check' OR 
 	 an_event_type = 'problem_graded' OR 
 	 an_event_type = 'problem_save' OR 
+	 an_event_type = 'seek_back_video' OR 
+	 an_event_type = 'seek_forward_video' OR 
 	 an_event_type = 'seek_video' OR 
 	 an_event_type = 'speed_change_video' OR 
 	 an_event_type = 'staff_grading_hide_question' OR 

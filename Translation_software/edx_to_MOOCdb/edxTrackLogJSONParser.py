@@ -1830,7 +1830,11 @@ class EdXTrackLogJSONParser(object):
         videoOldTime = str(valsDict.get('old_time', None))
         videoNewTime = str(valsDict.get('new_time', None))
         videoSeekType = valsDict.get('type', None)
-            
+        
+        if float(videoNewTime) > float(videoOldTime):
+            self.setValInRow('event_type', 'seek_forward_video')
+        else:
+            self.setValInRow('event_type', 'seek_back_video')
         self.setValInRow('video_id', videoID)
         self.setValInRow('video_code', videoCode)
         self.setValInRow('video_old_time', videoOldTime)

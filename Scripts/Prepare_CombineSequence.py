@@ -13,13 +13,17 @@ SEQ_COUNT = 0
 type_dict = {'stop_video' : 'St',
              'speed_change_video' : 'Sp',
              'seek_video' : 'Se',
+             'seek_forward_video' : 'Sf',
+             'seek_back_video' : 'Sb',
              'play_video' : 'Pl',
              'pause_video' : 'Pa',
              'load_video' : 'Lo'             
             }
 
-type_val_dict = {'St' : '5',
-                 'Sp' : '4',
+type_val_dict = {'St' : '6',
+                 'Sp' : '5',
+                 'Sf' : '4',
+                 'Sb' : '3',
                  'Se' : '3',
                  'Pl' : '2',
                  'Pa' : '1',
@@ -125,7 +129,7 @@ if __name__ == "__main__":
 #    cursor.execute("SELECT DISTINCT(user_id) FROM observed_events")
     cursor.execute("SELECT user_id,observed_event_timestamp,observed_event_duration, observed_event_type_id, url_id " +
                     "FROM observed_events " +
-                    "WHERE observed_event_type_id IN ('stop_video','speed_change_video','seek_video','play_video','pause_video','load_video') " + 
+                    "WHERE observed_event_type_id IN ('stop_video','speed_change_video','seek_video','seek_forward_video','seek_back_video','play_video','pause_video','load_video') " + 
                     "ORDER BY user_id,observed_event_timestamp")
     cur_user = ''
     cur_clic_seq = []

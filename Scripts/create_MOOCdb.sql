@@ -171,7 +171,7 @@ CREATE TABLE observed_events (
 --  observed_event_type_id int(11) NOT NULL,
   user_id char(40) NOT NULL,
   url_id int(11) NOT NULL,
-  observed_event_timestamp datetime NOT NULL,
+  observed_event_timestamp datetime(6) NOT NULL,
 --  observed_event_data longtext NOT NULL,
   observed_event_duration int(11) DEFAULT NULL,
   observed_event_ip char(3) DEFAULT NULL,
@@ -210,9 +210,9 @@ CREATE TABLE problems (
   problem_parent_id int(11) DEFAULT NULL,
   problem_child_number int(11) DEFAULT NULL,
   problem_type_id int(11) NOT NULL,
-  problem_release_timestamp datetime DEFAULT NULL,
-  problem_soft_deadline datetime DEFAULT NULL,
-  problem_hard_deadline datetime DEFAULT NULL,
+  problem_release_timestamp datetime(6) DEFAULT NULL,
+  problem_soft_deadline datetime(6) DEFAULT NULL,
+  problem_hard_deadline datetime(6) DEFAULT NULL,
   problem_max_submission int(11) DEFAULT NULL,
   problem_max_duration int(11) DEFAULT NULL,
   problem_weight int(11) DEFAULT NULL,
@@ -231,7 +231,7 @@ CREATE TABLE submissions (
   submission_id char(36) NOT NULL PRIMARY KEY,
   user_id char(40) NOT NULL,
   problem_id int(11) NOT NULL,
-  submission_timestamp datetime NOT NULL,
+  submission_timestamp datetime(6) NOT NULL,
   submission_attempt_number int(11) NOT NULL,
   submission_answer text NOT NULL,
   submission_is_submitted int(1) NOT NULL,
@@ -255,7 +255,7 @@ CREATE TABLE assessments (
 --  assessment_max_grade double DEFAULT NULL,
   assessment_grade_with_penalty double DEFAULT NULL,
   assessment_grader_id varchar(63) NOT NULL,
-  assessment_timestamp datetime DEFAULT NULL,
+  assessment_timestamp datetime(6) DEFAULT NULL,
   FOREIGN KEY(submission_id) REFERENCES submissions(submission_id) ON DELETE CASCADE
 --  KEY `submission_id_idx` (`submission_id`),
 --  KEY `grader_id_idx` (`assessment_grader_id`)
@@ -282,7 +282,7 @@ CREATE TABLE collaborations (
   user_id char(40) NOT NULL,
   collaboration_type_id int(11) NOT NULL,
   collaboration_content text NULL,
-  collaboration_timestamp datetime NOT NULL,
+  collaboration_timestamp datetime(6) NOT NULL,
   collaboration_parent_id int(11) DEFAULT NULL,
   collaboration_child_number int(11) DEFAULT NULL,
   collaborations_ip char(3) DEFAULT NULL,
@@ -308,8 +308,8 @@ CREATE TABLE collaborations (
 -- surveys table
 CREATE TABLE surveys (
   survey_id int(11) NOT NULL PRIMARY KEY,
-  survey_start_timestamp datetime DEFAULT NULL,
-  survey_end_timestamp datetime DEFAULT NULL
+  survey_start_timestamp datetime(6) DEFAULT NULL,
+  survey_end_timestamp datetime(6) DEFAULT NULL
 ) ENGINE=InnoDB;
 
 -- answers table
@@ -335,7 +335,7 @@ CREATE TABLE feedbacks (
   user_id int(11) NOT NULL,
   answer_id int(11) NOT NULL,
   question_id int(11) NOT NULL,
-  feedback_timestamp datetime DEFAULT NULL,
+  feedback_timestamp datetime(6) DEFAULT NULL,
   FOREIGN KEY(answer_id) REFERENCES answers(answer_id) ON DELETE CASCADE,
   FOREIGN KEY(question_id) REFERENCES questions(question_id) ON DELETE CASCADE
 --  KEY user_id_fk_idx (user_id),
@@ -373,7 +373,7 @@ CREATE TABLE users (
 --   user_ip int(10) unsigned DEFAULT NULL,
 --   user_timezone_offset int(11) DEFAULT NULL,
 --   user_final_grade double DEFAULT NULL,
---   user_join_timestamp datetime DEFAULT NULL,
+--   user_join_timestamp datetime(6) DEFAULT NULL,
 --   user_os int(11) DEFAULT NULL,
 --   user_agent int(11) DEFAULT NULL,
 --   user_language int(11) DEFAULT NULL,

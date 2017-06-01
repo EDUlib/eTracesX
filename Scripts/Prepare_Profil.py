@@ -10,18 +10,22 @@ SESSION_BY_VIDEO = False # Create a new session for each video viewed
 type_dict = {'load_video' : 0,
              'pause_video' : 0,
              'play_video' : 0,
+             'seek_back_video' : 0,
+             'seek_forward_video' : 0,
              'seek_video' : 0,
              'speed_change_video' : 0,
              'stop_video' : 0,             
             }
 
 def print_header(outputFile):
-    outputFile.write('ID|Lo|Pa|Pl|Se|Sp|St\n')
+    outputFile.write('ID|Lo|Pa|Pl|Sb|Sf|Se|Sp|St\n')
     
 def print_profile(cur_user, outputfile):
     if (type_dict['load_video'] == 0 and
         type_dict['pause_video'] == 0 and
         type_dict['play_video'] == 0 and
+        type_dict['seek_back_video'] == 0 and
+        type_dict['seek_forward_video'] == 0 and
         type_dict['seek_video'] == 0 and
         type_dict['speed_change_video'] == 0 and
         type_dict['stop_video'] == 0):
@@ -30,6 +34,8 @@ def print_profile(cur_user, outputfile):
             str(type_dict['load_video']) + '|' +\
             str(type_dict['pause_video']) + '|' +\
             str(type_dict['play_video']) + '|' +\
+            str(type_dict['seek_back_video']) + '|' +\
+            str(type_dict['seek_forward_video']) + '|' +\
             str(type_dict['seek_video']) + '|' +\
             str(type_dict['speed_change_video']) + '|' +\
             str(type_dict['stop_video']) + '\n'            
@@ -37,6 +43,8 @@ def print_profile(cur_user, outputfile):
     type_dict['load_video'] = 0
     type_dict['pause_video'] = 0
     type_dict['play_video'] = 0
+    type_dict['seek_back_video'] = 0
+    type_dict['seek_forward_video'] = 0
     type_dict['seek_video'] = 0
     type_dict['speed_change_video'] = 0
     type_dict['stop_video'] = 0
@@ -84,7 +92,7 @@ if __name__ == "__main__":
 #    cursor.execute("SELECT DISTINCT(user_id) FROM observed_events")
     cursor.execute("SELECT user_id,observed_event_timestamp,observed_event_duration, observed_event_type_id, url_id " +
                     "FROM observed_events " +
-                    "WHERE observed_event_type_id IN ('stop_video','speed_change_video','seek_video','play_video','pause_video','load_video') " + 
+                    "WHERE observed_event_type_id IN ('stop_video','speed_change_video','seek_video','seek_forward_video','seek_back_video','play_video','pause_video','load_video') " + 
                     "ORDER BY user_id,observed_event_timestamp")
     cur_user = ''
     cur_seq = []

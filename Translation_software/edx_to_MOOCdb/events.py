@@ -96,6 +96,8 @@ class VideoInteraction(Event):
     play_video                        
     pause_video                       
     seek_video                        
+    seek_forward_video                        
+    seek_back_video                        
     load_video                        
     speed_change_video       
     fullscreen 
