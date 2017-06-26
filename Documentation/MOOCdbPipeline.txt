@@ -11,22 +11,25 @@ STRUCTURE DES REPERTOIRES
 
 
 PROCEDURE
-Decompresser les logs vers /<DATA>/<COURS>/LOGS
-Concatener les logs dans un seul fichier (logs.txt) dans /<DATA>/<COURS>
-	cat /<DATA>/<COURS>/LOGS/* > /<DATA>/<COURS>/logs.txt
-Extraire les logs d'un cours et anonymiser les traces:
-	cd /<DATA>/<COURS>
-	cp /<SOURCE>/Scripts/ExtractCours.py .
-	Modifier la variable pCours dans ExtractCours.py
-	python ExtractCours.py -i logs.txt -o logs-anon.txt
+Placer les logs (gz) dans /<DATA>/LOGS
+Concatener les logs dans un seul fichier (all-Logs.txt.gz) dans /<DATA>
+	find /<DATA>/LOGS/ -name "tracking*.gz" | xargs cat > /<DATA>/all-Logs.txt.gz
+Separer les logs des cours:
+	cd /<SOURCE>/Scripts
+	Modifier la liste des cours a extraire dans SplitLogsEduLib.py
+	python SplitLogsEduLib.py -w /<DATA>/ -i all-Logs.txt -z > /<DATA>/DUPLICATE.txt
+	cd /<DATA>
+	cp /<SOURCE>/Scripts/sortLogs.sh .
+	Modifier la ligne sed dans sortLogs.sh pour indiquer l'emplacement de create_MOOCdb.sql
+	sh sortLogs.sh
 Transformation des logs vers MOOCdb (csv)
-	mkdir /<DATA>/<COURS>/MOOCDB
+	cd /<DATA>
+	ls |awk '{print "python main.py -i /<DATA>/" $1 "/logs.txt.gz -o /<DATA>/" $1 "/MOOCDB/\necho \"" $1 " DONE...\"|mail -s \"eTraceX\" -r nileduc@edulib.org hexabit@gmail.com"}' > Extract.sh
+	Retirer les lignes concernant Extract.sh et les cours que l'on ne desire pas convertir dans Extract.sh
 	cd /<SOURCE>/Translation_software/edx_to_MOOCdb
-	python main.py -i /<DATA>/<COURS>/logs-anon.txt -o /<DATA>/<COURS>/MOOCDB/ &
+	cp /<DATA>/Extract.sh .
+	sh Extract.sh &
 Charger MOOCdb (csv) dans MySQL
 	cd /<DATA>/<COURS>/MOOCDB
-	cp /<SOURCE>/Scripts/create_MOOCdb.sql .
-	Editer create_MOOCdb.sql
-		CREATE DATABASE IF NOT EXISTS MOOCdb_<COURS>;
-		USE MOOCdb_<COURS>;
+	OPTIONNEL: Editer create_MOOCdb.sql copie par sortLogs.sh
 	mysql -vv --show-warnings --local-infile=1 < create_MOOCdb.sql > mylog.txt &

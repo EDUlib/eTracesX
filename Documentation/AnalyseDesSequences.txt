@@ -1,0 +1,6 @@
+
+
+python Prepare_Sequence.py -d MOOCdb_ITES_1_P2015 >SEQ_ITES_NO_SPLIT.TXT
+cat SEQ_IFT_NO_SPLIT.TXT |awk 'FS = "|" {print $1}'|sort|uniq|wc -l
+cat SEQ_MOOCdb_IFT_Info_Theo_H2016_aF_i15_l300_s1800_SF_tT_vF.txt |awk 'FS = "|" {print $1}'|sort|uniq -c|sort -n|head -140
+cat SEQ_MOOCdb_ITES_1_P2015_aF_i15_l300_s1800_SF_tT_vF.txt |awk 'FS = "|" {print $1}'|sort|uniq -c |sort -rn|head -735|awk '{s+=$1}END{print s}'

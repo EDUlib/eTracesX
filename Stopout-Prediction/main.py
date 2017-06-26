@@ -14,6 +14,7 @@ def main(dbName=None, userName=None, passwd=None, dbHost=None,
         dbPort=None,training_course=None, testing_course=None,
         earliest_date=None,latest_date_object=None,features_to_skip=None,
         pred_week=None,feat_week=None, num_weeks=None,epsilon=None,lamb=None):
+
     if not dbHost:
         dbHost = '127.0.0.1'
     if not dbPort:
@@ -23,13 +24,13 @@ def main(dbName=None, userName=None, passwd=None, dbHost=None,
     if not passwd:
         passwd = getpass.getpass()
     if not dbName:
-        dbName = 'MOOCdb_TEST_ULB'
+        dbName = 'MOOCdb_TEST_ITES'
     if not latest_date_object:
         latest_date_object = datetime.datetime.now()
     latest_date = latest_date_object.isoformat()
     if not earliest_date:
         #in seconds:
-        dateSlack = 14400 # 2 hours between currentDate and when feature extraction started
+        dateSlack = 14400 # 4 hours between currentDate and when feature extraction started
         earliest_date = (latest_date_object - datetime.timedelta(seconds=dateSlack)).isoformat()
     if not training_course:
         training_course=dbName
@@ -37,7 +38,7 @@ def main(dbName=None, userName=None, passwd=None, dbHost=None,
         testing_course=dbName
 
     if not features_to_skip:
-        features_to_skip = [3,4,5,14, 103,104,105, 201, 301, 302]
+        features_to_skip = [16,17,18,210,302,4,104,204,205,206,207] # 3,4,5,14, 103,104,105, 201, 301, 302
     features = feature_dict.featuresFromFeaturesToSkip(features_to_skip)
 
     if not num_weeks:
@@ -46,9 +47,9 @@ def main(dbName=None, userName=None, passwd=None, dbHost=None,
     weeks = range(num_weeks)
 
     if not pred_week:
-        pred_week=5
+        pred_week=10
     if not feat_week:
-        feat_week=3
+        feat_week=5
 
     if not epsilon:
         epsilon=1
@@ -86,17 +87,19 @@ def initLock(l):
 
 def parallelize():
     l = mp.Lock()
+ #   initLock(l)
     ncores = mp.cpu_count()
     pool = mp.Pool(processes=ncores, initializer = initLock, initargs=(l,))
     return pool, ncores
 
 def runSpecificLag(course_db_name, features_to_skip, lag, passwd):#course_db_name, features_to_skip, lag):
-    for lead in xrange(lag+1, 14):
+    for lead in xrange(lag+1, 11):
+        print 'lead : ' + str(lead) + '   lag : ' + str(lag)
         main(dbName = course_db_name,
                 features_to_skip = features_to_skip,
                 earliest_date='2015-03-16T00:00:00',
                 latest_date_object=datetime.datetime.now(),
-                num_weeks = 14,
+                num_weeks = 15,
                 pred_week = lead,
                 feat_week = lag,
                 passwd = passwd)
@@ -106,14 +109,25 @@ def runAllProblemsPerCourse(course_db_name, features_to_skip):
     passwd = getpass.getpass()
     funclist = []
     for lag in xrange(13):
+#        runSpecificLag(course_db_name, features_to_skip, lag, passwd)
         f = pool.apply_async(runSpecificLag, [course_db_name, features_to_skip, lag, passwd])
         funclist.append(f)
-    [f.get() for f in funclist]
+    print 'SIZE OF F : ' + str(len(funclist))
+    for f in funclist:
+        f.get()
+        print 'THREAD TERMINATED'
+    print 'DONE'
 
 
 if __name__ == "__main__":
-    runAllProblemsPerCourse('MOOCdb_TEST_ULB',
-                features_to_skip = list(feature_dict.returnAllFeatureSet() - set([1,2,6,7,8,9])))                                             
+    feature_dict.lock = mp.Lock()
+    main('MOOCdb_ULB',
+#    runAllProblemsPerCourse('MOOCdb_TEST_ITES',
+#                features_to_skip = [3,4,5,14,103,104,105,201,204,205,206,207,301,16,17,18,210,302]) #without collab
+                features_to_skip = [16,17,18,210,302,4,104,204,205,206,207]) #with collab                
+#                features_to_skip = 
+#                list(feature_dict.returnAllFeatureSet() - 
+#                                        set([1,2,6,7,8,9,10,11,12,13,15,16,17,18,109,110,111,112,202,203,204,205,206,207,208,209,210])))                                             
 #                features_to_skip = [3,4,5,14,103,104,105,201,204,205,206,207,301]) #MIT without collab
                 #features_to_skip = [  4,  14,    104,105,201,204,205,206,207,   302,17]) #MIT with collab
 

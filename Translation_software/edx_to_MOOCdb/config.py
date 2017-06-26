@@ -2,8 +2,10 @@
 import re
 
 ## Input file
+#EDX_TRACK_EVENT_LOG = '/Users/leducni/Documents/DATA/TEST-ITES/logs-test-ITES.txt'
 EDX_TRACK_EVENT_LOG = '/Users/leducni/Documents/DATA/COURS/logs-anon.txt'
 ## Output files
+#DEST_DIR = '/Users/leducni/Documents/DATA/TEST-ITES/MOOCDB/'
 DEST_DIR = '/Users/leducni/Documents/DATA/COURS/MOOCDB/'
 
 ## Acceptable duration

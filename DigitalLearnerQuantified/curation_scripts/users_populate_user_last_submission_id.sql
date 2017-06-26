@@ -8,7 +8,7 @@
 
 -- SET SESSION sql_mode = ''; -- Alec edit
 -- SET SESSION sql_mode="NO_BACKSLASH_ESCAPES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"; -- Alec edit
-SET SESSION sql_mode = 'NO_BACKSLASH_ESCAPES,NO_ENGINE_SUBSTITUTION'; -- Alec edit
+-- SET SESSION sql_mode = 'NO_BACKSLASH_ESCAPES,NO_ENGINE_SUBSTITUTION'; -- Alec edit
 
 DROP PROCEDURE IF EXISTS `moocdb`.Alter_Table;
 
@@ -49,7 +49,7 @@ BEGIN
                         `moocdb`.submissions AS submissions
                     WHERE
                         `users`.user_id = submissions.user_id)
-            GROUP BY submissions.user_id
+            GROUP BY submissions.submission_id
 
         );
 

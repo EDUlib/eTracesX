@@ -113,6 +113,8 @@ if __name__ == "__main__":
         'TEST-ULB': {'database':'MOOCdb_TEST_ULB', 'startdate':'2015-03-16','enddate':None,'numweeks':'15'},
         }
     
+#    databaseFromDict = 'ULB'
+
     if databaseFromDict != None:
         if database != None or startdate != None or enddate != None or numweeks != None or databaseFromDict not in databaseDict.keys():
             print 'Argument ERROR!' 

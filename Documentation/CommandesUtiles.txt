@@ -1,0 +1,11 @@
+Expression reguliere pour isoler les ID: 
+[0-9a-f]*_[0-9a-f]*_[0-9a-f]*_[0-9a-f]*_[0-9a-f]*
+
+Pour extraire et anonymiser un cours, modifier la variable pCours et executer:
+python ExtractCours.py -i logs.txt -o logs-anon.txt
+
+Calcule le nombre de jours de connexion distincts pour chaque usager a partir de MOOCdb:
+mysql -D MOOCdb_IFT_Info_Theo_H2016 -e"select user_id, count(distinct(DATE(observed_event_timestamp))) from observed_events group by user_id;">CONN_COUNT_IFT.txt
+
+
+sed 's/\(.*ip\":\ \"\([0-9.]*\)\".*\)/\2 : \1/' 20150831-Cypress-moreclean.log
