@@ -13,7 +13,7 @@ STRUCTURE DES REPERTOIRES
 PROCEDURE
 Placer les logs (gz) dans /<DATA>/LOGS
 Concatener les logs dans un seul fichier (all-Logs.txt.gz) dans /<DATA>
-	find /<DATA>/LOGS/ -name "tracking*.gz" | xargs cat > /<DATA>/all-Logs.txt.gz
+	find /<DATA>/LOGS/ -name "tracking*.gz" | sort | xargs cat > /<DATA>/all-Logs.txt.gz
 Separer les logs des cours:
 	cd /<SOURCE>/Scripts
 	Modifier la liste des cours a extraire dans SplitLogsEduLib.py
